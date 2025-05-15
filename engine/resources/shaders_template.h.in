@@ -1,0 +1,15 @@
+#pragma once
+#ifndef RESOURCES_@var_name@_H_
+#define RESOURCES_@var_name@_H_
+
+#include <cstddef>
+#include <string>
+
+namespace CoreResources 
+{
+    const std::string @var_name@ = R"(
+@shader_code@
+)";
+}
+
+#endif //RESOURCES_@var_name@_H_

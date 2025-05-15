@@ -1,0 +1,13 @@
+#pragma once
+#ifndef RESOURCES_@var_name@_H_
+#define RESOURCES_@var_name@_H_
+
+#include <cstddef>
+
+namespace CoreResources 
+{
+    constexpr unsigned char @var_name@[] = { @byte_array@ };
+    constexpr size_t @var_name@_size = sizeof(@var_name@);
+}
+
+#endif //RESOURCES_@var_name@_H_

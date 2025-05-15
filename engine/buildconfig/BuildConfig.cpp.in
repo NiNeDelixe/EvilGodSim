@@ -1,0 +1,74 @@
+#include "BuildConfig.h"
+
+const Config BuildConfig;
+
+Config::Config()
+{
+    // Name and copyright
+    LAUNCHER_NAME = "@Launcher_Name@";
+    LAUNCHER_DISPLAYNAME = "@Launcher_DisplayName@";
+    LAUNCHER_COPYRIGHT = "@Launcher_Copyright@";
+    LAUNCHER_DOMAIN = "@Launcher_Domain@";
+    LAUNCHER_CONFIGFILE = "@Launcher_ConfigFile@";
+    LAUNCHER_GIT = "@Launcher_Git@";
+
+    USER_AGENT = "@Launcher_UserAgent@";
+    USER_AGENT_UNCACHED = USER_AGENT + " (Uncached)";
+
+    // Version information
+    VERSION_MAJOR = std::stoi(std::string("@Launcher_VERSION_MAJOR@").empty() ? "0" : "@Launcher_VERSION_MAJOR@");
+    VERSION_MINOR = std::stoi(std::string("@Launcher_VERSION_MINOR@").empty() ? "0" : "@Launcher_VERSION_MINOR@");
+    VERSION_HOTFIX = std::stoi(std::string("@Launcher_VERSION_HOTFIX@").empty() ? "0" : "@Launcher_VERSION_HOTFIX@");
+    VERSION_BUILD = std::stoi(std::string("@Launcher_VERSION_BUILD@").empty() ? "0" : "@Launcher_VERSION_BUILD@");
+
+    IS_DEBUG_BUILD = @IS_DEBUG_BUILD@;
+
+    BUILD_PLATFORM = "@Launcher_BUILD_PLATFORM@";
+    UPDATER_BASE = "@Launcher_UPDATER_BASE@";
+    NOTIFICATION_URL = "@Launcher_NOTIFICATION_URL@";
+    FULL_VERSION_STR = "@Launcher_VERSION_MAJOR@.@Launcher_VERSION_MINOR@.@Launcher_VERSION_BUILD@";
+
+    GIT_COMMIT = "@Launcher_GIT_COMMIT@";
+    GIT_REFSPEC = "@Launcher_GIT_REFSPEC@";
+    if(GIT_REFSPEC.starts_with("refs/heads/") && !UPDATER_BASE.empty() && !BUILD_PLATFORM.empty() && VERSION_BUILD >= 0)
+    {
+        VERSION_CHANNEL = GIT_REFSPEC;
+        VERSION_CHANNEL.erase(VERSION_CHANNEL.find("refs/heads/"), 12);
+        UPDATER_ENABLED = true;
+    }
+    else
+    {
+        VERSION_CHANNEL = "custom";
+    }
+
+    VERSION_STR = "@Launcher_VERSION_STRING@";
+    NEWS_URL = "@Launcher_NEWS_URL@";
+    NEWS_RSS_URL = "@Launcher_NEWS_RSS_URL@";
+    PASTE_EE_KEY = "@Launcher_PASTE_EE_API_KEY@";
+    MSA_CLIENT_ID = "@Launcher_MSA_CLIENT_ID@";
+    IMGUR_CLIENT_ID = "@Launcher_IMGUR_CLIENT_ID@";
+    META_URL = "@Launcher_META_URL@";
+
+    BUG_TRACKER_URL = "@Launcher_BUG_TRACKER_URL@";
+    DISCORD_URL = "@Launcher_DISCORD_URL@";
+    SUBREDDIT_URL = "@Launcher_SUBREDDIT_URL@";
+    PATREON_URL = "@Launcher_PATREON_URL@";
+}
+
+std::string Config::printableVersionString() const
+{
+    std::string vstr = std::format("{}.{}.{}", std::to_string(VERSION_MAJOR), std::to_string(VERSION_MINOR), std::to_string(VERSION_HOTFIX));
+
+    // If the build is not a main release, append the channel
+    if(VERSION_CHANNEL != "develop")
+    {
+        vstr += "-" + VERSION_CHANNEL;
+    }
+
+    // if a build number is set, also add it to the end
+    if(VERSION_BUILD >= 0)
+    {
+        vstr += "-" + std::to_string(VERSION_BUILD);
+    }
+    return vstr;
+}

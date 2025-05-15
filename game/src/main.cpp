@@ -1,8 +1,9 @@
-﻿#include <EngineApplication.h>
+﻿#include <enginecore/core/EngineCoreApplication.h>
 
-int main(int argc, char** argv)
+
+int main(int argc, char* argv[])
 {
-	EngineApplication app(argc, argv);
-	
+	EngineCoreApplication app(argc, argv);
+
 	return app.exec();
 }

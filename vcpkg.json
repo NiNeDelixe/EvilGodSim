@@ -1,0 +1,27 @@
+{
+  "name": "evilgodsim",
+  "version": "0.1",
+  "dependencies": [
+    "glew",
+    "glfw3",
+    "glm",
+    "nlohmann-json",
+    "opengl",
+    "toml11",
+    "opencv",
+    "gtest",
+    "glog",
+    "bshoshany-thread-pool",
+    {
+      "name": "imgui",
+      "features": [
+        "docking-experimental",
+        "dx11-binding",
+        "win32-binding",
+        "glfw-binding",
+        "opengl3-binding"
+      ]
+    },
+    "entt"
+  ]
+}

@@ -7,5 +7,31 @@ endif()
 
 project("EvilGodSim")
 
+option(BUILD_TESTS "Build tests" OFF)
+
+
+message(STATUS "Build type: ${CMAKE_BUILD_TYPE}")
+set(IS_DEBUG_BUILD "false")
+if("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
+    set(IS_DEBUG_BUILD "true")
+endif()
+
+
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED True)
+
+message(STATUS "cmake toolchin file: ${CMAKE_TOOLCHAIN_FILE}")
+
+set(${ENTT_BUILD_DOCS} ON)
+
+####################################### Subdirectories #######################################
+
 add_subdirectory("Engine" EXCLUDE_FROM_ALL)
 add_subdirectory("Game")
+add_subdirectory("Editor")
+
+if(BUILD_TESTS)
+    message(STATUS "Building tests")
+    enable_testing()
+    add_subdirectory("tests")
+endif()

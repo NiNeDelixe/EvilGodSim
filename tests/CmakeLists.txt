@@ -1,0 +1,30 @@
+project(EvilGodSimTests)
+
+file(GLOB_RECURSE sources ${CMAKE_CURRENT_SOURCE_DIR}/*.cpp)
+
+find_package(GTest)
+
+add_executable(${PROJECT_NAME} ${sources})
+
+target_link_libraries(${PROJECT_NAME} 
+    PRIVATE 
+        Engine::Core 
+        GTest::gtest_main
+)
+
+# HACK: copy res to test/ folder for fixing problem compatibility MultiConfig
+# and non MultiConfig builds. Delete in future and use only root res folder Also
+# this resolve problem with ctests, because it set cwd to
+# ${CMAKE_CURRENT_BINARY_DIR}
+#add_custom_command(
+#    TARGET ${PROJECT_NAME}
+#    POST_BUILD
+#    COMMAND ${CMAKE_COMMAND} -E copy_directory_if_different
+#            ${CMAKE_SOURCE_DIR}/res ${CMAKE_CURRENT_BINARY_DIR}/res
+#)
+
+file(GLOB_RECURSE RESOURCES ${CMAKE_CURRENT_SOURCE_DIR}/test_resources/*)
+FILE(COPY ${RESOURCES} DESTINATION "${CMAKE_BINARY_DIR}/tests")
+
+include(GoogleTest)
+gtest_discover_tests(${PROJECT_NAME})
