@@ -25,6 +25,23 @@
 #include "enginecore/utils/platform/SystemDetection.h"
 #include "enginecore/utils/TimeUtils.h"
 
+#ifdef MAX
+#undef MAX
+#endif // MAX
+
+#ifdef max
+#undef max
+#endif // max
+
+#ifdef MIN
+#undef MIN
+#endif // MIN
+
+#ifdef min
+#undef min
+#endif // min
+
+
 class BaseWindow
 {
 public:
@@ -56,6 +73,11 @@ public:
     void setBackgroundColor(const glm::vec4& color);
 
 public:
+    void pushScissor(const glm::vec4& area);
+    void resetScissor();
+    void popScissor();
+
+public:
     const std::vector<std::shared_ptr<Viewport>>& viewports() const { return this->m_viewports; }
     GLFWwindow* const getGLFWWindow() const { return this->m_window; }
     double time();
@@ -63,7 +85,7 @@ public:
 public:
     const std::shared_ptr<WindowEvents>& events() { return this->m_events; }
 
-private:
+protected:
     GLFWwindow* m_window;
     std::shared_ptr<WindowEvents> m_events;
 

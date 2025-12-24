@@ -5,6 +5,7 @@
 #include <memory>
 #include <variant>
 #include <list>
+#include <set>
 
 #include <glm/glm.hpp>
 
@@ -32,13 +33,13 @@ protected:
 	virtual glm::vec4 pickLight(const glm::ivec3& coord) const;
 
 protected:
-	std::list<std::shared_ptr<IMesh>> m_meshes;
+	std::set<std::shared_ptr<IMesh>> m_meshes;
+	size_t m_capacity = 0;
 	std::shared_ptr<float[]> m_vertex_buffer = std::make_shared<float[]>(m_capacity);
 	std::shared_ptr<int[]> m_index_buffer = std::make_shared<int[]>(m_capacity);
 	size_t m_vertex_offset = 0;
 	size_t m_index_offset = 0;
 	size_t m_index_size = 0;
-	size_t m_capacity = 0;
 	bool m_overflow = false;
 	bool m_cancelled = false;
 };

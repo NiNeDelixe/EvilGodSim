@@ -23,8 +23,8 @@ EngineCoreApplication::EngineCoreApplication(int& argc, char** argv)
 
 	google::InitGoogleLogging(argv[0]);
 
-	auto a = std::make_shared<DisplaySettings>(); //TEMP: in future its move to global options and weak ptr doesnt expired
-	this->m_window = std::make_shared<BaseWindow>(a, argv[0]);
+	auto a = std::make_shared<DisplaySettings>(); //TEMP: in future its moved to global options and weak_ptr in BaseWindow doesnt expired
+	this->m_window = std::make_shared<BaseWindow>(m_global_settings->display(), argv[0]);
 
 	this->m_paths = std::make_shared<EnginePaths>();
 
@@ -55,10 +55,14 @@ EngineCoreApplication::EngineCoreApplication(int& argc, char** argv)
 
 	loadAssets();
 	loadSystems();
+
+	this->m_ctx = std::make_shared<DrawContext>(nullptr, this->m_window);
 }
 
 EngineCoreApplication::EngineCoreApplication()
 {
+	m_global_settings = std::make_shared<EngineSettings>();
+
 	if (EngineCoreApplication::m_instance != nullptr)
 	{
 		throw std::runtime_error("Engine application must be one instance");
@@ -78,6 +82,15 @@ int EngineCoreApplication::exec() noexcept(false)
 	this->m_in_exec = true;
 
 	this->poll();
+	try
+	{
+	}
+	catch (const std::exception& exc)
+	{
+		LOG(ERROR) << "Exception in main loop cough: " << exc.what();
+		throw exc;
+	}
+	
 
 	this->m_in_exec = false;
 	return this->m_return_code;
@@ -97,7 +110,7 @@ void EngineCoreApplication::poll()
 
 		this->prefix(); //Virtual prefix method
 
-		this->m_window->events()->update(); //Poll Evens
+		this->m_window->events()->update(); //Poll Gl Events
 
 		this->update(); //Update logic
 		this->m_current_screen->update(Time::deltaTime()); // Update
@@ -139,14 +152,18 @@ void EngineCoreApplication::loadAssets()
 
 void EngineCoreApplication::loadSystems()
 {
-	m_systems.push_back(std::make_shared<CameraSystem>());
+	m_systems[SystemTypes::CONTROLLING] = std::make_shared<FreeFlySystem>();
+
+	auto entity = m_registry.create();
+	m_registry.emplace<Transform>(entity);
+	m_registry.emplace<Camera>(entity, glm::vec3(0), this->m_global_settings->camera()->fov.get(), entity);
 }
 
 void EngineCoreApplication::update()
 {
 	for (const auto& system : this->m_systems)
 	{
-		system->update(this->m_registry);
+		system.second->update(this->m_registry);
 	}
 }
 

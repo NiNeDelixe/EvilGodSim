@@ -42,7 +42,7 @@ public:
     }
 
 private:
-    static inline uint64_t m_frame = 0;
+    static inline uinteger_t m_frame = 0;
     static inline double m_last_time = 0.0;
     static inline double m_delta = 0.0;
 };

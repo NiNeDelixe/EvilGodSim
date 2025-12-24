@@ -1,4 +1,4 @@
-#include "enginecore/core/render/Mesh.h"
+#include "enginecore/core/graphics/render/Mesh.h"
 
 #include "enginecore/utils/GLUtils.h"
 

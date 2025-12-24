@@ -10,6 +10,12 @@
 #include "missing_texture.h"
 #include "main_frag.h"
 #include "main_vert.h"
+#include "test_frag.h"
+#include "test_vert.h"
+#include "camera_vert.h"
+#include "camera_frag.h"
+#include "model_vert.h"
+#include "model_frag.h"
 
 class AssetsCoreLoader
 {

@@ -12,12 +12,17 @@ GLShader::~GLShader()
 	glDeleteProgram(m_id);
 }
 
-uint_t GLShader::getUniformLocation(const std::string& name)
+GLint GLShader::getUniformLocation(const std::string& name)
 {
     auto found = m_uniform_locations.find(name);
     if (found == m_uniform_locations.end()) 
     {
-        uint_t location = glGetUniformLocation(m_id, name.c_str());
+        GLint location = glGetUniformLocation(m_id, name.c_str());
+        if (location == -1)
+        {
+            LOG_EVERY_N(ERROR, 100) << name << " does not correspond to an active uniform variable in: " << m_id;
+            return location;
+        }
         m_uniform_locations.try_emplace(name, location);
         return location;
     }

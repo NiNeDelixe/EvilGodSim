@@ -1,4 +1,4 @@
-#include "enginecore/core/render/BaseRenderer.h"
+#include "enginecore/core/graphics/render/BaseRenderer.h"
 
 void BaseRenderer::vertex(const glm::vec3& coord, const float& u, const float& v, const glm::vec4& light)
 {
@@ -9,14 +9,11 @@ void BaseRenderer::vertex(const glm::vec3& coord, const float& u, const float& v
     m_vertex_buffer[++m_vertex_offset] = u;
     m_vertex_buffer[++m_vertex_offset] = v;
     
-    std::variant<float, uint32_t> compressed{};
 
-    compressed = static_cast<uint32_t>((static_cast<uint32_t>(light.r * 255) & 0xff) << 24);
-    std::get<uint32_t>(compressed) |= (static_cast<uint32_t>(light.g * 255) & 0xff) << 16;
-    std::get<uint32_t>(compressed) |= (static_cast<uint32_t>(light.b * 255) & 0xff) << 8;
-    std::get<uint32_t>(compressed) |= (static_cast<uint32_t>(light.a * 255) & 0xff);
-
-    m_vertex_buffer[++m_vertex_offset] = std::get<float>(compressed);
+    m_vertex_buffer[++m_vertex_offset] = static_cast<uint8_t>(light.r * 255);
+    m_vertex_buffer[++m_vertex_offset] = static_cast<uint8_t>(light.g * 255);
+    m_vertex_buffer[++m_vertex_offset] = static_cast<uint8_t>(light.b * 255);
+    m_vertex_buffer[++m_vertex_offset] = static_cast<uint8_t>(light.a * 255);
 }
 
 void BaseRenderer::index(const int& a, const int& b, const int& c, const int& d, const int& e, const int& f)

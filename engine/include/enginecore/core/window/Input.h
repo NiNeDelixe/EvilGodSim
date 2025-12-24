@@ -15,6 +15,10 @@
 #undef DELETE
 #endif // DELETE
 
+#ifdef ERROR
+#undef ERROR
+#endif // ERROR
+
 
 //#include "enginecore/utils/HandlersList.hpp"
 

@@ -3,7 +3,7 @@
 #include "enginecore/core/window/WindowEvents.h" //FIXME: move to header
 
 BaseWindow::BaseWindow(const std::weak_ptr<DisplaySettings>& settings, const std::string& window_title)
-    : m_display_settings(settings), m_title(window_title), m_events(std::make_shared<WindowEvents>())
+    : m_display_settings(settings), m_title(window_title), m_events(std::make_shared<WindowEvents>(*this))
 {
     std::shared_ptr<DisplaySettings> display_settings = m_display_settings.lock();
     int width = static_cast<int>(display_settings->width.get());
@@ -125,7 +125,7 @@ BaseWindow::~BaseWindow()
 void BaseWindow::update()
 {
     glfwSwapBuffers(m_window);
-    //resetScissor();
+    resetScissor();
     if (this->m_max_framerate > 0) 
     {
         auto elapsed_time = time() - this->m_prev_swap;
@@ -170,6 +170,77 @@ void BaseWindow::setBackgroundColor(const glm::vec4& color)
 {
     glfwMakeContextCurrent(m_window);
     glClearColor(color.r, color.g, color.b, color.a);
+}
+
+void BaseWindow::pushScissor(const glm::vec4& area)
+{
+    if (m_scissor_stack.empty()) 
+    {
+        glEnable(GL_SCISSOR_TEST);
+    }
+    m_scissor_stack.push(m_scissor_area);
+
+    glm::vec4 new_area = area;
+
+    new_area.z += glm::ceil(new_area.x);
+    new_area.w += glm::ceil(new_area.y);
+
+    new_area.x = glm::max(new_area.x, m_scissor_area.x);
+    new_area.y = glm::max(new_area.y, m_scissor_area.y);
+
+    new_area.z = glm::min(new_area.z, m_scissor_area.z);
+    new_area.w = glm::min(new_area.w, m_scissor_area.w);
+
+    if (new_area.z < 0.0f || new_area.w < 0.0f)
+    {
+        glScissor(0, 0, 0, 0);
+    }
+    else 
+    {
+        glScissor(
+            new_area.x,
+            m_height - new_area.w,
+            std::max(0, static_cast<int>(glm::ceil(new_area.z - new_area.x))),
+            std::max(0, static_cast<int>(glm::ceil(new_area.w - new_area.y)))
+        );
+    }
+    m_scissor_area = new_area;
+}
+
+void BaseWindow::resetScissor()
+{
+    m_scissor_area = glm::vec4(0.0f, 0.0f, m_width, m_height);
+    m_scissor_stack = std::stack<glm::vec4>();
+    glDisable(GL_SCISSOR_TEST);
+}
+
+void BaseWindow::popScissor()
+{
+    if (m_scissor_stack.empty()) 
+    {
+        LOG(WARNING) << "extra Window::popScissor call";
+        return;
+    }
+    glm::vec4 area = m_scissor_stack.top();
+    m_scissor_stack.pop();
+    if (area.z < 0.0f || area.w < 0.0f) 
+    {
+        glScissor(0, 0, 0, 0);
+    }
+    else 
+    {
+        glScissor(
+            area.x,
+            m_height - area.w,
+            std::max(0, static_cast<int>(area.z - area.x)),
+            std::max(0, static_cast<int>(area.w - area.y))
+        );
+    }
+    if (m_scissor_stack.empty()) 
+    {
+        glDisable(GL_SCISSOR_TEST);
+    }
+    m_scissor_area = area;
 }
 
 double BaseWindow::time()

@@ -6,21 +6,19 @@
 #include <vector>
 #include <unordered_map>
 #include <string>
+#include <queue>
 #include <optional>
 
 #include "enginecore/core/CoreDefines.h"
 
-#include "enginecore/core/EnginePaths_p.h"
+#include "EnginePaths_p.h"
 
 struct PathsRoots;
 
 class EnginePaths
 {
-private:
-    DECLARE_PRIVATE(EnginePaths);
-
 public:
-    DECLARE_PTR(EnginePaths);
+    DECLARE_PTR(EnginePaths)
 
 public:
 	EnginePaths() = default;

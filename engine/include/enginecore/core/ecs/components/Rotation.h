@@ -11,6 +11,10 @@ class Rotation : public IComponent
 {
 public:
 	glm::mat4 m_rotation{ 1.0f };
+
+	float m_yaw;
+	float m_pitch;
+	float m_roll;
 };
 
 

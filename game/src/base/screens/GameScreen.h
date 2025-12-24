@@ -2,21 +2,30 @@
 #ifndef BASE_GAMESCREEN_H_
 #define BASE_GAMESCREEN_H_
 
+#include <memory>
+
 #include <enginecore/core/screens/Screen.h>
 
 #include <enginecore/core/EngineCoreApplication.h>
 
+#include <enginecore/core/ecs/systems/ThirdPersonSystem.h>
+
+
+#include "base/renderer/world/WorldRenderer.h"
+
 class GameScreen : public Screen
 {
 public:
-	GameScreen() = default;
+	GameScreen();
 	~GameScreen() = default;
 
 	void update(const float& delta) override;
 	void draw(const float& delta) override;
 
-private:
+	void loadTestMap();
 
+private:
+	WorldRenderer render;
 };
 
 

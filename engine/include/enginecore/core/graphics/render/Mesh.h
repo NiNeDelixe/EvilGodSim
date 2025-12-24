@@ -16,16 +16,15 @@ struct DefaultAtributes
 {
     glm::vec3 position;
     glm::vec2 uv;
-    //float light;
+    //std::array<float, 4> light;
 
     /// @brief Base mesh vertex attributes
-    /// {3} - cords vertex, {2} - UV atributes, {1} - light compressed value, {0} - end symbol
-    static constexpr UTILS_NAMESPACE::gl::VertexAttribute ATTRIBUTES[] =
+    /// @brief {3} - cords vertex, {2} - UV atributes, {1} - light compressed value + 3 padding, {0} - end symbol
+    static constexpr ENGINE_NAMESPACE::UTILS_NAMESPACE::gl::VertexAttribute ATTRIBUTES[] =
     {
-        {UTILS_NAMESPACE::gl::VertexAttribute::Type::FLOAT, false, 3},
-        {UTILS_NAMESPACE::gl::VertexAttribute::Type::FLOAT, false, 2},
-        //{VertexAttribute::Type::FLOAT, false, 1},
-        //{VertexAttribute::Type::PADDING, false, 3},
+        {ENGINE_NAMESPACE::UTILS_NAMESPACE::gl::VertexAttribute::Type::FLOAT, false, 3},
+        {ENGINE_NAMESPACE::UTILS_NAMESPACE::gl::VertexAttribute::Type::FLOAT, false, 2},
+        //{UTILS_NAMESPACE::gl::VertexAttribute::Type::FLOAT, false, 4},
         {{}, 0} 
     };
 };
@@ -53,7 +52,7 @@ public:
         for (int i = 0; attributes[i].count; ++i)
         {
             auto atribute_value = attributes[i];
-            glVertexAttribPointer(i, atribute_value.count, UTILS_NAMESPACE::gl::to_glenum(atribute_value.type),
+            glVertexAttribPointer(i, atribute_value.count, ENGINE_NAMESPACE::UTILS_NAMESPACE::gl::to_glenum(atribute_value.type),
                 atribute_value.normalized, sizeof(VERTEXATRIBUTE),
                 reinterpret_cast<GLvoid*>(offset));
             glEnableVertexAttribArray(i);
@@ -63,7 +62,7 @@ public:
         glBindVertexArray(0);
     }
 
-    ~Mesh()
+    virtual ~Mesh()
     {
         glDeleteVertexArrays(1, &m_vao);
         glDeleteBuffers(1, &m_vbo);

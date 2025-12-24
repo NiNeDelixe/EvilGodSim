@@ -18,7 +18,7 @@ void GLTexture::load()
     glBindTexture(GL_TEXTURE_2D, m_id);
     glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
     
-    GLenum format = UTILS_NAMESPACE::gl::to_glenum(m_image_data->getFormat());
+    GLenum format = ENGINE_NAMESPACE::UTILS_NAMESPACE::gl::to_glenum(m_image_data->getFormat());
     glTexImage2D(
         GL_TEXTURE_2D, 0, GL_RGBA, getWidth(), getHeight(), 0,
         GL_RGBA, GL_UNSIGNED_BYTE, static_cast<const GLvoid*>(getBytesArray().get())

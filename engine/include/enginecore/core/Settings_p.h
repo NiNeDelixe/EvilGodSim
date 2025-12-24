@@ -51,7 +51,7 @@ struct CameraSettings
     /// @brief Camera movement inertia effect
     FlagSetting inertia{ true };
     /// @brief Camera field of view
-    NumberSetting fov{ 90.0f, 10, 120 };
+    NumberSetting fov{ 90.0f, 10.f, 120.f };
     /// @brief Camera sensitivity
     NumberSetting sensitivity{ 2.0f, 0.1f, 10.0f };
 };
@@ -100,14 +100,14 @@ struct NetworkSettings
 
 struct EngineSettingsPrivate
 {
-    AudioSettings audio;
-    DisplaySettings display;
-    ChunksSettings chunks;
-    CameraSettings camera;
-    GraphicsSettings graphics;
-    DebugSettings debug;
-    UiSettings ui;
-    NetworkSettings network;
+    std::shared_ptr<AudioSettings> audio = std::make_shared<AudioSettings>();
+    std::shared_ptr<DisplaySettings> display = std::make_shared<DisplaySettings>();
+    std::shared_ptr<ChunksSettings> chunks = std::make_shared<ChunksSettings>();
+    std::shared_ptr<CameraSettings> camera = std::make_shared<CameraSettings>();
+    std::shared_ptr<GraphicsSettings> graphics = std::make_shared<GraphicsSettings>();
+    std::shared_ptr<DebugSettings> debug = std::make_shared<DebugSettings>();
+    std::shared_ptr<UiSettings> ui = std::make_shared<UiSettings>();
+    std::shared_ptr<NetworkSettings> network = std::make_shared<NetworkSettings>();
 };
 
 

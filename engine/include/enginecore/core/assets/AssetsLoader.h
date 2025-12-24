@@ -46,7 +46,7 @@ public:
 		if (found == m_loaders.end()) 
 		{
 			throw std::runtime_error(
-				"unknown asset tag " + std::to_string(static_cast<int>(tag)));
+				"Unknown asset tag " + std::to_string(static_cast<int>(tag)));
 		}
 		return found->second;
 	}

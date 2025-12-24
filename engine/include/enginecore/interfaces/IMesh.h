@@ -24,7 +24,7 @@ public:
         const size_t* const index_buffer, const size_t& indices) = 0;
 
 protected:
-    static constexpr size_t calc_size(const UTILS_NAMESPACE::gl::VertexAttribute* const attrs)
+    static constexpr size_t calc_size(const ENGINE_NAMESPACE::UTILS_NAMESPACE::gl::VertexAttribute* const attrs)
     {
         size_t vertex_size = 0;
         for (size_t i = 0; attrs[i].count; ++i)

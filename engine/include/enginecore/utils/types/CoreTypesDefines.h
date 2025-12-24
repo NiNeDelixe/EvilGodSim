@@ -9,6 +9,7 @@
 using integer_t = int64_t;
 /// @brief dynamic floating-point type (64 bit floating point)
 using number_t = double;
+using uinteger_t = uint64_t;
 
 using uint_t = uint32_t;
 using u64id_t = uint64_t;

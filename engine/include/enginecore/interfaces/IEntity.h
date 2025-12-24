@@ -14,6 +14,9 @@ class IEntity : IComponent
 public:
 	IEntity() = default;
 	virtual ~IEntity() = default;
+
+protected:
+	std::uint32_t m_entt_id;
 };
 
 template<typename TYPE>

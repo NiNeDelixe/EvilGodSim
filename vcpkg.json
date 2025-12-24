@@ -2,26 +2,57 @@
   "name": "evilgodsim",
   "version": "0.1",
   "dependencies": [
+    "assimp",
+    "bshoshany-thread-pool",
+    "entt",
+    "ereignis",
     "glew",
     "glfw3",
     "glm",
-    "nlohmann-json",
-    "opengl",
-    "toml11",
-    "opencv",
-    "gtest",
     "glog",
-    "bshoshany-thread-pool",
+    "gtest",
     {
       "name": "imgui",
       "features": [
         "docking-experimental",
         "dx11-binding",
-        "win32-binding",
         "glfw-binding",
-        "opengl3-binding"
+        "opengl3-binding",
+        "win32-binding"
       ]
     },
-    "entt"
+    "libnoise",
+    "nlohmann-json",
+    "opencv",
+    "opengl",
+    "stb",
+    "toml11",
+    "fixed-math"
+  ],
+  "overrides": [
+    {
+      "name": "glew",
+      "version": "2.2.0#6"
+    },
+    {
+      "name": "glfw3",
+      "version": "3.4#1"
+    },
+    {
+      "name": "glm",
+      "version": "1.0.1#3"
+    },
+    {
+      "name": "opengl",
+      "version": "2022-12-04#3"
+    },
+    {
+      "name": "stb",
+      "version": "2024-07-29#1"
+    },
+    {
+      "name": "ereignis",
+      "version": "4.3"
+    }
   ]
 }

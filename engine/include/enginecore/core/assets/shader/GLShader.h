@@ -11,6 +11,9 @@
 #include <fstream>
 #include <iostream>
 #include <sstream>
+#include <stdarg.h>
+
+#include <glog/logging.h>
 
 #include <glm/gtc/type_ptr.hpp>
 
@@ -21,34 +24,17 @@
 
 #include "enginecore/core/CoreDefines.h"
 #include "enginecore/interfaces/IAsset.h"
+#include "enginecore/utils/TypeUtils.h"
 
-#define DECLARE_UNIFORM_INT_FUNCTIONS \
-void uniform(const std::string& name, const int& value) { \
-    glUniform1i(getUniformLocation(name), value); \
-} \
-void uniform(const std::string& name, const int& value1, const int& value2) { \
-    glUniform2i(getUniformLocation(name), value1, value2); \
-} \
-void uniform(const std::string& name, const int& value1, const int& value2, const int& value3) { \
-    glUniform3i(getUniformLocation(name), value1, value2, value3); \
-} \
-void uniform(const std::string& name, const int& value1, const int& value2, const int& value3, const int& value4) { \
-    glUniform4i(getUniformLocation(name), value1, value2, value3, value4); \
-}
-
-#define DECLARE_UNIFORM_FLOAT_FUNCTIONS \
-void uniform(const std::string& name, const float& value) { \
-    glUniform1f(getUniformLocation(name), value); \
-} \
-void uniform(const std::string& name, const float& value1, const float& value2) { \
-    glUniform2f(getUniformLocation(name), value1, value2); \
-} \
-void uniform(const std::string& name, const float& value1, const float& value2, const float& value3) { \
-    glUniform3f(getUniformLocation(name), value1, value2, value3); \
-} \
-void uniform(const std::string& name, const float& value1, const float& value2, const float& value3, const float& value4) { \
-    glUniform4f(getUniformLocation(name), value1, value2, value3, value4); \
-}
+#define DECLARE_UNIFORMS(T, suffix) \
+    void uniform(const std::string& name, const T& v1) \
+        { glUniform1##suffix(getUniformLocation(name), v1); } \
+    void uniform(const std::string& name, const T& v1, const T& v2) \
+        { glUniform2##suffix(getUniformLocation(name), v1, v2); } \
+    void uniform(const std::string& name, const T& v1, const T& v2, const T& v3) \
+        { glUniform3##suffix(getUniformLocation(name), v1, v2, v3); } \
+    void uniform(const std::string& name, const T& v1, const T& v2, const T& v3, const T& v4) \
+        { glUniform4##suffix(getUniformLocation(name), v1, v2, v3, v4); }
 
 class GLShader : public IAsset
 {
@@ -63,14 +49,15 @@ protected:
 	};
 
 protected:
+	DISABLE_COPY(GLShader)
 
 public:
 	GLShader(const GLuint& id);
-	GLShader(const GLShader& copy) = delete;
+	//GLShader(const GLShader& copy) = delete;
 	~GLShader();
 
 protected:
-	uint_t getUniformLocation(const std::string& name);
+	GLint getUniformLocation(const std::string& name);
 
 	using glshader = std::unique_ptr<GLuint, shader_deleter>;
 
@@ -81,15 +68,20 @@ public:
 	/// @brief !! use BEFORE uniforms !! 
 	virtual void use() const;
 
-	DECLARE_UNIFORM_INT_FUNCTIONS;
-	DECLARE_UNIFORM_FLOAT_FUNCTIONS;
+	DECLARE_UNIFORMS(float, f)
+	DECLARE_UNIFORMS(double, d)
+	DECLARE_UNIFORMS(int, i)
+	DECLARE_UNIFORMS(unsigned int, ui)
 
 	void uniform(const std::string& name, const glm::vec2& value) { uniform(name, value.x, value.y); }
 	void uniform(const std::string& name, const glm::ivec2& value) { uniform(name, value.x, value.y); }
 	void uniform(const std::string& name, const glm::vec3& value) { uniform(name, value.x, value.y, value.z); }
-	void uniform(const std::string& name, const glm::mat4& matrix) 
-	{
+	void uniform(const std::string& name, const glm::vec4& value) { uniform(name, value.r, value.g, value.b, value.a); }
+	void uniform(const std::string& name, const glm::mat4& matrix) {
 		glUniformMatrix4fv(getUniformLocation(name), 1, GL_FALSE, glm::value_ptr(matrix));
+	}
+	void uniform(const std::string& name, const glm::mat3& matrix) {
+		glUniformMatrix3fv(getUniformLocation(name), 1, GL_FALSE, glm::value_ptr(matrix));
 	}
 
 	static std::shared_ptr<GLShader> createFromFile(const std::filesystem::path& vertex_filepath,
@@ -100,6 +92,7 @@ public:
 
 public:
 	virtual GLuint getId() const { return m_id; }
+	virtual std::string getName(const GLuint& id) { return std::string(); }
 
 	static const std::shared_ptr<GLSLCompiler>& getCompiler() { return m_compiler; }
 

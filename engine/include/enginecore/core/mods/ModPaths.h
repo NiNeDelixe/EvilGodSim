@@ -12,12 +12,9 @@
 
 class ModPaths
 {
-private:
-	DECLARE_PRIVATE(ModPaths);
-
 public:
-	DECLARE_PTR(ModPaths);
-	DECLARE_WPTR(ModPaths);
+	DECLARE_PTR(ModPaths)
+	DECLARE_WPTR(ModPaths)
 
 public:
 	ModPaths() = default;

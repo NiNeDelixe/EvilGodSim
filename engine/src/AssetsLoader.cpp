@@ -17,23 +17,23 @@ void AssetsLoader::addResource(const AssetType& tag, const std::string& filename
 
 void AssetsLoader::addResources(const std::list<std::filesystem::path>& resources)
 {
-	for (auto& res : resources)
+	for (std::filesystem::path res : resources)
 	{
 		if (res.extension() == ".png")
 		{
-			addResource(AssetType::TEXTURE, res.generic_string(), res.filename().generic_string(), nullptr);
+			addResource(AssetType::TEXTURE, res.generic_string(), res.stem().generic_string(), nullptr);
 			continue;
 		}
 
 		if (res.extension() == ".png" && res.filename().string().find("_font") != std::string::npos)
 		{
-			addResource(AssetType::FONT, res.generic_string(), res.filename().generic_string(), nullptr);
+			addResource(AssetType::FONT, res.generic_string(), res.stem().generic_string(), nullptr);
 			continue;
 		}
 
 		if (res.extension() == ".frag" || res.extension() == ".vert")
 		{
-			addResource(AssetType::SHADER, res.generic_string(), res.filename().generic_string(), nullptr);
+			addResource(AssetType::SHADER, res.replace_extension().generic_string(), res.stem().generic_string(), nullptr);
 			continue;
 			/*if (res.extension() == "vert")
 			{
@@ -44,13 +44,19 @@ void AssetsLoader::addResources(const std::list<std::filesystem::path>& resource
 				LOG(ERROR) << "Shader must have vert and frag shader file";
 			}*/
 		}
+
+		if (res.extension() == ".fbx" || res.extension() == ".obj")
+		{
+			addResource(AssetType::MODEL, res.generic_string(), res.stem().generic_string(), nullptr);
+			continue;
+		}
 	}
 }
 
 void AssetsLoader::loadNext()
 {	
 	const loaderentry& entry = m_entries.front();
-	LOG(INFO) << "Loading" << entry.filename << "as" << entry.alias;
+	LOG(INFO) << "Loading " << entry.filename << " as " << entry.alias;
 
 	try
 	{

@@ -104,6 +104,39 @@ void BaseWindow::WindowEvents::setCursorPosition(const float& xpos, const float&
     m_cursor.y = ypos;
 }
 
+bool BaseWindow::WindowEvents::isCursorLocked() const
+{
+    return m_cursor_locked;
+}
+
+void BaseWindow::WindowEvents::toggleLockCursor()
+{
+    m_cursor_drag = false;
+    if (m_cursor_locked) 
+    {
+        glfwSetInputMode(m_base_window.m_window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+    }
+    else 
+    {
+        glfwSetInputMode(m_base_window.m_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+    }
+    m_cursor_locked = !m_cursor_locked;
+}
+
+void BaseWindow::WindowEvents::lockCursor(const bool& state)
+{
+    m_cursor_drag = false;
+    if (!state)
+    {
+        glfwSetInputMode(m_base_window.m_window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+    }
+    else
+    {
+        glfwSetInputMode(m_base_window.m_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+    }
+    m_cursor_locked = state;
+}
+
 void BaseWindow::WindowEvents::keyCallback(GLFWwindow* window, int key, int scancode, int action, int mode)
 {
     BaseWindow* handler = static_cast<BaseWindow*>(glfwGetWindowUserPointer(window));
@@ -184,8 +217,8 @@ void GLAPIENTRY BaseWindow::WindowEvents::glMessageCallback(GLenum source, GLenu
         return;
     }
 
-    LOG(ERROR) << "GL: " << UTILS_NAMESPACE::gl::error_name(type) << " : "
-        << UTILS_NAMESPACE::gl::severity_name(severity) << ": " << message;
+    LOG(ERROR) << "GL: " << ENGINE_NAMESPACE::UTILS_NAMESPACE::gl::error_name(type) << " : "
+        << ENGINE_NAMESPACE::UTILS_NAMESPACE::gl::severity_name(severity) << ": " << message;
 }
 
 void BaseWindow::WindowEvents::characterCallback(GLFWwindow* window, unsigned int codepoint)

@@ -2,7 +2,12 @@
 #ifndef INTERFACES_ISYSTEM_H_
 #define INTERFACES_ISYSTEM_H_
 
-#include <entt/entt.hpp>
+#include "enginecore/utils/types/EntityDefines.h"
+
+enum SystemTypes
+{
+	CONTROLLING
+};
 
 class ISystem
 {
@@ -10,7 +15,7 @@ public:
 	ISystem() = default;
 	virtual ~ISystem() = default;
 
-	virtual void update(entt::registry& registry) = 0;
+	virtual void update(EntityRegistry<DefaultEntityIndentifier>& registry) = 0;
 
 private:
 

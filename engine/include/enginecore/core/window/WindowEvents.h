@@ -4,6 +4,10 @@
 
 #include <memory>
 
+#include <glm/glm.hpp>
+#include <GL/glew.h>
+#include <GLFW/glfw3.h>
+
 #include <BuildConfig.h>
 
 #include "enginecore/core/window/BaseWindow.h"
@@ -16,7 +20,9 @@
 class BaseWindow::WindowEvents
 {
 public:
-	WindowEvents() = default;
+	WindowEvents(BaseWindow& bw)
+		: m_base_window(bw)
+	{ }
 	~WindowEvents() = default;
 
 public:
@@ -28,10 +34,20 @@ public:
 	bool clicked(const int& code) const;
 
 public:
+	const glm::vec2& getCursorPos() const { return m_cursor; }
+	const glm::vec2& getCursorDelta() const { return m_delta; }
+
+public:
 	void setKey(const int& key, const bool& b);
 	void setButton(const int& button, const bool& b);
 	void setCursorPosition(const float& xpos, const float& ypos);
 
+public:
+	bool isCursorLocked() const;
+	void toggleLockCursor();
+	void lockCursor(const bool& state);
+
+public:
 	static void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mode);
 	static void mouseButtonCallback(GLFWwindow* window, int button, int action, int mode);
 	static void cursorPositionCallback(GLFWwindow* window, double xpos, double ypos);
@@ -42,7 +58,9 @@ public:
 	static void GLAPIENTRY glMessageCallback(GLenum source, GLenum type, GLuint id,
 		GLenum severity, GLsizei length, const GLchar* message, const void* userParam);
 
-private:
+protected:
+	BaseWindow& m_base_window;
+
 	std::unordered_map<std::string, Binding> m_bindings;
 
 	std::vector<uint_t> m_codepoints = {};

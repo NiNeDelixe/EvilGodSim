@@ -1,0 +1,6 @@
+#define DISABLE_COPY(Class) Class(const Class &); Class &operator=(const Class &);
+#define DECLARE_UNIFORMS(T, suffix) void uniform(const std::string& name, const T& v1) { glUniform1##suffix(getUniformLocation(name), v1); } void uniform(const std::string& name, const T& v1, const T& v2) { glUniform2##suffix(getUniformLocation(name), v1, v2); } void uniform(const std::string& name, const T& v1, const T& v2, const T& v3) { glUniform3##suffix(getUniformLocation(name), v1, v2, v3); } void uniform(const std::string& name, const T& v1, const T& v2, const T& v3, const T& v4) { glUniform4##suffix(getUniformLocation(name), v1, v2, v3, v4); }
+#define DECLARE_PTR(Class)
+#define DECLARE_WPTR(Class)
+#define GETTER(type, field, Name) const type& get##Name() { return this->field; }
+#define SETTER(type, field, Name) void set##Name(const type& value) { this->field = value; }

@@ -26,6 +26,9 @@ public:
 	const GLsizei& getHeight() const { return this->m_height; }
 	const GLsizei& getWidth() const { return this->m_width; }
 
+	const GLint& x() const { return this->m_x; }
+	const GLint& y() const { return this->m_y; }
+
 private:
 	GLint m_x;
 	GLint m_y;

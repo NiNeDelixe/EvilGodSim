@@ -4,9 +4,11 @@
 
 #include "enginecore/interfaces/IAssetLoader.h"
 
+#include "enginecore/core/assets/loaders/AutoRegisterLoader.h"
+
 #include "enginecore/core/assets/shader/GLShader.h"
 
-class ShaderLoader : public IAssetLoader
+class ShaderLoader : public IAssetLoader, public AutoRegisterLoader<AssetType::SHADER, ShaderLoader>
 {
 public:
 	ShaderLoader(AssetsManager* const manager)

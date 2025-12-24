@@ -2,6 +2,8 @@
 #ifndef INTERFACES_IASSET_H_
 #define INTERFACES_IASSET_H_
 
+#include "enginecore/core/CoreDefines.h"
+
 #include <string>
 #include <filesystem>
 
@@ -16,11 +18,13 @@ public:
 	virtual ~IAsset() = default;
 
 	virtual const std::string& toString() const { return getType(); }
-	const std::string& getType() const { return typeid(*this).name(); }
-	virtual const std::filesystem::path& getPath() const { return m_asset_path; }
+	const std::string getType() const { return typeid(*this).name(); }
 	virtual const bool& isLoaded() const { return m_is_loaded; }
 
-private:
+	virtual GETTER(std::filesystem::path, m_asset_path, Path);
+	virtual SETTER(std::filesystem::path, m_asset_path, Path);
+
+protected:
 	std::filesystem::path m_asset_path;
 	bool m_is_loaded;
 };

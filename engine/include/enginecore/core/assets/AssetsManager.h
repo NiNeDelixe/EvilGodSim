@@ -26,10 +26,7 @@ private:
     using types_map = std::unordered_map<std::type_index, assets_map>;
 
 public:
-    AssetsManager()
-    {
-
-    }
+    AssetsManager() = default;
 	~AssetsManager() = default;
 
 public:
@@ -39,7 +36,8 @@ public:
     template<CONCEPTS_NAMESPACE::IsDerivedFromIAsset T>
     std::pair<assets_map::iterator, bool> store(const std::shared_ptr<T>& asset, const std::string& name)
     {
-        return m_assets[typeid(T)].insert(std::pair<std::string, std::shared_ptr<IAsset>>{ name, std::dynamic_pointer_cast<IAsset, T>(asset) });
+        return m_assets[typeid(T)].insert(
+            std::pair<std::string, std::shared_ptr<IAsset>>{ name, std::dynamic_pointer_cast<IAsset, T>(asset) });
     }
 
     template<CONCEPTS_NAMESPACE::IsDerivedFromIAsset T>
@@ -60,12 +58,29 @@ public:
     }
 
     template<CONCEPTS_NAMESPACE::IsDerivedFromIAsset T>
+    std::vector<T*> get() const
+    {
+        std::vector<T*> result;
+        const auto& mapIter = m_assets.find(typeid(T));
+        if (mapIter != m_assets.end())
+        {
+            const auto& map = mapIter->second;
+            result.reserve(map.size());
+            for (const auto& pair : map)
+            {
+                result.push_back(static_cast<T*>(pair.second.get()));
+            }
+        }
+        return result;
+    }
+
+    template<CONCEPTS_NAMESPACE::IsDerivedFromIAsset T>
     T& require(const std::string& name) const 
     {
         T* asset = get<T>(name);
         if (asset == nullptr) 
         {
-            throw std::runtime_error(UTILS_NAMESPACE::string::quote(name) + " not found");
+            throw std::runtime_error(UTILS_NAMESPACE::string::quote(name) + " asset not found");
         }
         return *asset;
     }

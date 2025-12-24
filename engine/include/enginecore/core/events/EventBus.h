@@ -6,7 +6,7 @@
 #include <map>
 #include <vector>
 #include <functional>
-#include <concepts>
+#include <concepts> 
 
 #include "enginecore/core/CoreDefines.h"
 #include "enginecore/utils/types/Delegates.h"
