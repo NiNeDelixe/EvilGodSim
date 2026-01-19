@@ -57,6 +57,10 @@ EngineCoreApplication::EngineCoreApplication(int& argc, char** argv)
 	loadSystems();
 
 	this->m_ctx = std::make_shared<DrawContext>(nullptr, this->m_window);
+
+	// this->m_fps_counter = std::make_shared<FPSCounter>();
+
+	m_uis.push_back(std::make_shared<DebugUi>());
 }
 
 EngineCoreApplication::EngineCoreApplication()
@@ -107,6 +111,12 @@ void EngineCoreApplication::poll()
 	while (!this->m_window->shouldClose())
 	{
 		Time::update(m_window->time()); //Update time
+
+		for (auto&& ui : m_uis)
+		{
+			ui->update();
+		}
+		//std::for_each(m_uis.begin(), m_uis.end(), std::bind(&Ui::update));
 
 		this->prefix(); //Virtual prefix method
 
@@ -172,6 +182,13 @@ void EngineCoreApplication::prefix()
 	ImGui_ImplOpenGL3_NewFrame();
 	ImGui_ImplGlfw_NewFrame();
 	ImGui::NewFrame();
+
+	for (auto&& ui : m_uis)
+	{
+		ui->render();
+	}
+	
+	//std::for_each(m_uis.begin(), m_uis.end(), std::bind(&Ui::render));
 }
 
 void EngineCoreApplication::postfix()

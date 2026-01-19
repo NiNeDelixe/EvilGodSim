@@ -218,7 +218,7 @@ void BaseWindow::popScissor()
 {
     if (m_scissor_stack.empty()) 
     {
-        LOG(WARNING) << "extra Window::popScissor call";
+        LOG(WARNING) << "extra popScissor call";
         return;
     }
     glm::vec4 area = m_scissor_stack.top();
@@ -243,7 +243,7 @@ void BaseWindow::popScissor()
     m_scissor_area = area;
 }
 
-double BaseWindow::time()
+etime_t BaseWindow::time()
 {
     glfwMakeContextCurrent(m_window);
     return glfwGetTime();

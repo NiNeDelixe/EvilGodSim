@@ -11,20 +11,20 @@
 
 #include <enginecore/core/screens/Screen.h>
 
-#include "base/screens/GameScreen.h"
+#include "base/screens/ui/MainMenuUi.h"
 
 
 class MenuScreen : public Screen
 {
 public:
 	MenuScreen();
-	~MenuScreen() = default;
+	virtual ~MenuScreen();
 
 	void update(const float& delta) override;
 	void draw(const float& delta) override;
 
 private:
-	
+	std::vector<std::shared_ptr<Ui>>::iterator menu_ui;
 };
 
 #endif // !SCREEN_MENUSCREEN_H_

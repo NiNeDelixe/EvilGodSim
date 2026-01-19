@@ -60,10 +60,14 @@ public:
         }
 
         glBindVertexArray(0);
+
+        ++MeshStats::m_meshes_count;
     }
 
     virtual ~Mesh()
     {
+        --MeshStats::m_meshes_count;
+
         glDeleteVertexArrays(1, &m_vao);
         glDeleteBuffers(1, &m_vbo);
         if (m_ibo != 0)
@@ -104,16 +108,56 @@ public:
     void draw(const GLenum& primitive) const override
     {
         ++MeshStats::m_draw_calls;
+        size_t triangle_count = 0;
+
         glBindVertexArray(m_vao);
         if (m_ibo != 0)
         {
+            switch (primitive)
+            {
+                case GL_TRIANGLES:
+                    triangle_count = m_indices / 3;
+                    break;
+                case GL_TRIANGLE_STRIP:
+                case GL_TRIANGLE_FAN:
+                    triangle_count = (m_indices >= 3) ? (m_indices - 2) : 0;
+                    break;
+                case GL_QUADS:
+                    triangle_count = (m_indices / 4) * 2;
+                    break;
+                default:
+                    // For non-triangle primitives, count as 0
+                    triangle_count = 0;
+                    break;
+            }
+
             glDrawElements(primitive, m_indices, GL_UNSIGNED_INT, nullptr);
         }
         else
         {
+            switch (primitive)
+            {
+                case GL_TRIANGLES:
+                    triangle_count = m_vertices / 3;
+                    break;
+                case GL_TRIANGLE_STRIP:
+                case GL_TRIANGLE_FAN:
+                    triangle_count = (m_vertices >= 3) ? (m_vertices - 2) : 0;
+                    break;
+                case GL_QUADS:
+                    triangle_count = (m_vertices / 4) * 2;
+                    break;
+                default:
+                    // For non-triangle primitives, count as 0
+                    triangle_count = 0;
+                    break;
+            }
+
             glDrawArrays(primitive, 0, m_vertices);
         }
         glBindVertexArray(0);
+
+        MeshStats::m_triangles_count += triangle_count;
     }
 
 	void draw() const

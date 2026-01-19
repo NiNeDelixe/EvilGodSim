@@ -2,6 +2,10 @@
 
 project(Engine)
 
+####################################### Options #######################################
+
+option(GLOBAL_RELOPS_NAMESPACE "Use global std::rel_ops namespace" ON)
+
 ####################################### Branding #######################################
 
 set(ENGINE_Project_CommonName "EvilGodEngine")
@@ -89,3 +93,7 @@ target_link_libraries(${PROJECT_NAME}
 		assimp::assimp
 		fixed_math::fixed_math
 )
+
+if(GLOBAL_RELOPS_NAMESPACE)
+	target_compile_definitions(${PROJECT_NAME} PUBLIC -DUSING_GLOBAL_RELOPS_NAMESPACE)	
+endif(GLOBAL_RELOPS_NAMESPACE)

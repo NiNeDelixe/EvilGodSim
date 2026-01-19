@@ -4,6 +4,13 @@ WorldRenderer::WorldRenderer(const std::weak_ptr<Level>& world)
 	: m_world(world)
 {
 	m_model_renderer = std::make_shared<ModelRenderer>();
+
+	//TESTED
+	auto&& entity = EngiApp->getEntityRegistry().create();
+	auto&& model = EngiApp->assets().lock()->get<Model>("body_v2");
+	
+	EngiApp->getEntityRegistry().emplace<ModelComponent>(entity, model);
+	EngiApp->getEntityRegistry().emplace<Transform>(entity);
 }
 
 void WorldRenderer::render()
@@ -36,6 +43,7 @@ void WorldRenderer::prepareShaders()
 	{
 		Camera& camera = camera_views.get<Camera>(entity);
 		camera.setAspectRatio(viewport->getWidth() / static_cast<float>(viewport->getHeight()));
+		//camera.setAspectRatio(viewport->getHeight() / static_cast<float>(viewport->getWidth()));
 
 		shader->use();
 		//frag

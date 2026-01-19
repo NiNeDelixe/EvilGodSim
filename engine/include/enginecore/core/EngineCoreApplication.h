@@ -2,12 +2,13 @@
 #ifndef ENGINE_ENGINECOREAPPLICATION_H_
 #define ENGINE_ENGINECOREAPPLICATION_H_
 
+#include "enginecore/core/CoreDefines.h"
+
 #include <list>
+#include <deque>
 
 #include <glog/logging.h>
 #include <glm/ext.hpp>
-
-#include "enginecore/core/CoreDefines.h"
 
 #include "enginecore/core/LibrariesDefines.h"
 
@@ -31,6 +32,9 @@
 #include "enginecore/core/screens/Screen.h"
 #include "enginecore/core/screens/PlaceHolderScreen.h"
 
+#include "enginecore/core/graphics/ui/Ui.h"
+#include "enginecore/core/graphics/ui/DebugUi.h"
+
 #include "enginecore/interfaces/ISystem.h"
 #include "enginecore/interfaces/IEntity.h"
 
@@ -38,6 +42,7 @@
 #include "enginecore/core/ecs/entities/Camera.h"
 
 #include "enginecore/utils/ImguiIncludes.h"
+// #include "enginecore/utils/FPSStats.h"
 
 #ifdef ERROR
 #undef ERROR
@@ -82,6 +87,11 @@ public:
 	const std::weak_ptr<EnginePaths>& paths() const { return m_paths; }
 	const std::weak_ptr<DrawContext>& ctx() const { return m_ctx; }
 	const std::weak_ptr<AssetsLoader>& getAssetsLoader() const { return m_assets_loader; }
+	// const std::weak_ptr<FPSCounter>& fpsStats() const { return m_fps_counter; }
+
+public:
+	GETTER(std::vector<std::shared_ptr<Ui>>, m_uis, Uis)
+	SETTER(std::vector<std::shared_ptr<Ui>>, m_uis, Uis)
 
 public:
 	EntityRegistry<DefaultEntityIndentifier>& getEntityRegistry() { return this->m_registry; }
@@ -104,8 +114,10 @@ protected:
 
 	std::shared_ptr<BaseWindow> m_window = nullptr;
 	std::shared_ptr<Screen> m_current_screen = nullptr;
+	std::vector<std::shared_ptr<Ui>> m_uis{};
 	std::shared_ptr<EnginePaths> m_paths = nullptr;
 	std::shared_ptr<DrawContext> m_ctx = nullptr;
+	// std::shared_ptr<FPSCounter> m_fps_counter = nullptr;
 
 	EntityRegistry<DefaultEntityIndentifier> m_registry;
 	std::unordered_map<SystemTypes, std::shared_ptr<ISystem>> m_systems = {};

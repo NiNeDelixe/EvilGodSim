@@ -21,16 +21,24 @@ void Camera::updateVectors()
     m_transform.m_right = glm::normalize(glm::cross(m_transform.m_front, glm::vec3(0, 1, 0)));
     m_transform.m_up = glm::normalize(glm::cross(m_transform.m_right, m_transform.m_front));*/
 
-    m_transform.m_front = glm::vec3(m_transform.m_rotation * glm::vec4(0, 0, -1, 1));
-    m_transform.m_right = glm::vec3(m_transform.m_rotation * glm::vec4(1, 0, 0, 1));
-    m_transform.m_up = glm::vec3(m_transform.m_rotation * glm::vec4(0, 1, 0, 1));
-    m_transform.m_direction = glm::vec3(m_transform.m_rotation * glm::vec4(0, 0, -1, 1));
-    m_transform.m_direction.y = 0;
-    float len = glm::length(m_transform.m_direction);
-    if (len > 0.0f) 
+    if (m_transform.m_front_modified)
     {
-        m_transform.m_direction.x /= len;
-        m_transform.m_direction.z /= len;
+        m_transform.m_front_modified = false;
+        updateRotationFromFront();
+    }
+    else
+    {
+        m_transform.m_front = glm::vec3(m_transform.m_rotation * glm::vec4(0, 0, -1, 1));
+        m_transform.m_right = glm::vec3(m_transform.m_rotation * glm::vec4(1, 0, 0, 1));
+        m_transform.m_up = glm::vec3(m_transform.m_rotation * glm::vec4(0, 1, 0, 1));
+        m_transform.m_direction = glm::vec3(m_transform.m_rotation * glm::vec4(0, 0, -1, 1));
+        m_transform.m_direction.y = 0;
+        float len = glm::length(m_transform.m_direction);
+        if (len > 0.0f) 
+        {
+            m_transform.m_direction.x /= len;
+            m_transform.m_direction.z /= len;
+        }
     }
 }
 
@@ -43,6 +51,32 @@ void Camera::rotate(const float& x, const float& y, const float& z)
     m_transform.m_pitch += y;
     m_transform.m_roll += z;
     m_transform.m_rotation = glm::mat4_cast(glm::quat(glm::vec3(m_transform.m_pitch, m_transform.m_yaw, m_transform.m_roll)));*/
+    updateVectors();
+}
+
+void Camera::lookAt(const glm::vec3 &target)
+{
+    glm::vec3 direction = glm::normalize(target - m_transform.m_pos);
+    m_transform.m_front = direction;
+
+    m_transform.m_front_modified = true;
+    updateRotationFromFront();
+}
+
+void Camera::updateRotationFromFront()
+{
+    glm::vec3 front = glm::normalize(m_transform.m_front);
+    glm::vec3 world_up = glm::vec3(0.0f, 1.0f, 0.0f);
+    glm::vec3 right = glm::normalize(glm::cross(front, world_up));
+    glm::vec3 up = glm::normalize(glm::cross(right, front));
+    
+    m_transform.m_rotation = glm::mat4(
+        glm::vec4(right, 0.0f),
+        glm::vec4(up, 0.0f),
+        glm::vec4(-front, 0.0f), // OpenGL front = -z
+        glm::vec4(0.0f, 0.0f, 0.0f, 1.0f)
+    );
+    
     updateVectors();
 }
 

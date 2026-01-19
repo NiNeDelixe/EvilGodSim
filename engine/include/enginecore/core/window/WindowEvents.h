@@ -19,6 +19,15 @@
 
 class BaseWindow::WindowEvents
 {
+private:
+	struct KeyTiming 
+	{
+        double last_press_time = 0.0;
+        double last_repeat_time = 0.0;
+        bool was_pressed = false;
+        bool processed_once = false;
+    };
+
 public:
 	WindowEvents(BaseWindow& bw)
 		: m_base_window(bw)
@@ -30,12 +39,17 @@ public:
 
 	bool pressed(const Keycode& key) const;
 	bool pressed(const int& key) const;
+	bool pressedDelay(const Keycode& key) const;
+	bool pressedDelay(const int& key) const;
+	bool pressedOnce(const Keycode& key) const;
+	bool pressedOnce(const int& key) const;
 	bool clicked(const Mousecode& code) const;
 	bool clicked(const int& code) const;
 
 public:
 	const glm::vec2& getCursorPos() const { return m_cursor; }
 	const glm::vec2& getCursorDelta() const { return m_delta; }
+	const double& getScroll() const { return m_scroll; } 
 
 public:
 	void setKey(const int& key, const bool& b);
@@ -74,6 +88,13 @@ protected:
 	glm::vec2 m_cursor = {};
 	bool m_cursor_drag = false;
 	bool m_cursor_locked = false;
+
+	double m_current_time = 0.0f;
+
+	KeyTiming m_key_timing[KEYS_BUFFER_SIZE] = {};
+    static constexpr double KEY_REPEAT_DELAY = 0.5; 
+    static constexpr double KEY_REPEAT_RATE = 0.1;
+    static constexpr double KEY_PRESS_DELAY = 0.3;
 };
 
 

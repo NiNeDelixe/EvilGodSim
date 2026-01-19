@@ -27,14 +27,26 @@ public:
     void rotate(const float& x, const float& y, const float& z);
     void rotate(const glm::vec3& vec) { rotate(vec.x, vec.y, vec.z); }
 
+    void lookAt(const glm::vec3& target);
+    void updateRotationFromFront();
+
     glm::mat4 getProjection() const;
     glm::mat4 getView(const bool& position = true) const;
 
-    void setFov(const float& fov) { this->m_fov = fov; }
-    const float& getFov() const { return this->m_fov; }
+    void setFov(const float& fov) 
+    { 
+        this->m_fov = fov; 
+    }
+    const float& getFov() const 
+    { 
+        return this->m_fov; 
+    }
 
     const float& getAspectRatio() const;
-    void setAspectRatio(const float& ratio) { m_aspect = ratio; }
+    void setAspectRatio(const float& ratio) 
+    { 
+        m_aspect = ratio; 
+    }
 
 public:
     float m_fov = 1.0f;

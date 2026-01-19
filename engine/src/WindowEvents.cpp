@@ -10,6 +10,8 @@ void BaseWindow::WindowEvents::update()
     m_pressed_keys.clear();
     glfwPollEvents();
 
+    m_current_time += Time::deltaTime();
+
     for (auto& entry : m_bindings)
     {
         auto& binding = entry.second;
@@ -66,7 +68,51 @@ bool BaseWindow::WindowEvents::pressed(const int& key) const
     return pressed(static_cast<Keycode>(key));
 }
 
-bool BaseWindow::WindowEvents::clicked(const Mousecode& code) const
+bool BaseWindow::WindowEvents::pressedDelay(const Keycode &key) const
+{
+    int keycode = static_cast<int>(key);
+    if (keycode < 0 || keycode >= KEYS_BUFFER_SIZE) 
+    {
+        return false;
+    }
+    
+    if (!m_keys[keycode]) 
+    {
+        return false;
+    }
+    
+    double press_duration = m_current_time - m_key_timing[keycode].last_press_time;
+    return press_duration >= KEY_PRESS_DELAY;
+}
+
+bool BaseWindow::WindowEvents::pressedDelay(const int &key) const
+{
+    return pressedDelay(static_cast<Keycode>(key));
+}
+
+bool BaseWindow::WindowEvents::pressedOnce(const Keycode &key) const
+{
+    int keycode = static_cast<int>(key);
+    if (keycode < 0 || keycode >= KEYS_BUFFER_SIZE) 
+    {
+        return false;
+    }
+    
+    if (!m_keys[keycode] || m_key_timing[keycode].processed_once) 
+    {
+        return false;
+    }
+    
+    const_cast<WindowEvents*>(this)->m_key_timing[keycode].processed_once = true;
+    return true;
+}
+
+bool BaseWindow::WindowEvents::pressedOnce(const int &key) const
+{
+    return pressedOnce(static_cast<Keycode>(key));
+}
+
+bool BaseWindow::WindowEvents::clicked(const Mousecode &code) const
 {
     return pressed(
         static_cast<Keycode>(_MOUSE_KEYS_OFFSET + static_cast<int>(code))
@@ -80,6 +126,20 @@ bool BaseWindow::WindowEvents::clicked(const int& code) const
 
 void BaseWindow::WindowEvents::setKey(const int& key, const bool& b)
 {
+    if (key < 0 || key >= KEYS_BUFFER_SIZE) 
+        return;
+    
+    if (b && !m_keys[key]) 
+    {
+        m_key_timing[key].last_press_time = m_current_time;
+        m_key_timing[key].last_repeat_time = m_current_time;
+        m_key_timing[key].processed_once = false;
+    }
+    else if (!b && m_keys[key]) 
+    {
+        m_key_timing[key].was_pressed = false;
+    }
+
     m_keys[key] = b;
     m_frames[key] = m_current_frame;
 }

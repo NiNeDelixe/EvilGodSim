@@ -16,11 +16,7 @@ public:
 	ModelRenderer()
 		: BaseRenderer(1) 
 	{
-		auto&& entity = EngiApp->getEntityRegistry().create();
-		auto&& model = EngiApp->assets().lock()->get<Model>("body_v2");
 		
-		EngiApp->getEntityRegistry().emplace<ModelComponent>(entity, model);
-		EngiApp->getEntityRegistry().emplace<Transform>(entity);
 	}
 
 public:

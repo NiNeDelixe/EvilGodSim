@@ -26,4 +26,6 @@ using itemcount_t = uint32_t;
 using blockstate_t = uint16_t;
 using light_t = uint16_t;
 
+using etime_t = double;
+
 #endif // !TYPES_CORETYPESDEFINE_H_

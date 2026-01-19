@@ -29,7 +29,7 @@ private:
     float m_move_speed = 3.0f;
     float m_rotation_speed = 2.0f;
     float m_camera_distance = 5.0f;
-    float m_camera_height = 2.0f;
+    float m_camera_height = 6.0f;
     float m_min_camera_distance = 2.0f;
     float m_max_camera_distance = 10.0f;
     float m_zoom_speed = 0.5f;

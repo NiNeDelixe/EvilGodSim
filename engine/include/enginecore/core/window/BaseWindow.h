@@ -6,6 +6,7 @@
 #include <string>
 #include <vector>
 #include <stack>
+#include <deque>
 
 #include <glm/glm.hpp>
 #include <GL/glew.h>
@@ -48,7 +49,7 @@ public:
     class WindowEvents;
 
 private:
-    DISABLE_COPY(BaseWindow);
+    DISABLE_COPY(BaseWindow)
 
 public:
     BaseWindow(const std::weak_ptr<DisplaySettings>& settings, const std::string& window_title);
@@ -78,9 +79,9 @@ public:
     void popScissor();
 
 public:
-    const std::vector<std::shared_ptr<Viewport>>& viewports() const { return this->m_viewports; }
+    const std::deque<std::shared_ptr<Viewport>>& viewports() const { return this->m_viewports; }
     GLFWwindow* const getGLFWWindow() const { return this->m_window; }
-    double time();
+    etime_t time();
 
 public:
     const std::shared_ptr<WindowEvents>& events() { return this->m_events; }
@@ -95,7 +96,7 @@ protected:
     int m_pos_y;
     std::string m_title;
 
-    std::vector<std::shared_ptr<Viewport>> m_viewports = std::vector<std::shared_ptr<Viewport>>(1);
+    std::deque<std::shared_ptr<Viewport>> m_viewports = std::deque<std::shared_ptr<Viewport>>(1);
 
     std::weak_ptr<DisplaySettings> m_display_settings;
 

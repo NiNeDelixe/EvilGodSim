@@ -9,6 +9,7 @@
 struct MeshStats
 {
     static size_t m_draw_calls;
+    static size_t m_triangles_count;
     static size_t m_meshes_count;
 };
 

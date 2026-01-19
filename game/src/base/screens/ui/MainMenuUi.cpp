@@ -1,21 +1,10 @@
-#include "MenuScreen.h"
+#include "MainMenuUi.h"
 
-MenuScreen::MenuScreen()
+void MainMenuUi::update()
 {
-    //menu_ui = EngiApp->getUis().push_back(std::make_shared<MainMenuUi>());
 }
 
-MenuScreen::~MenuScreen()
-{
-    //EngiApp->getUis().erase(menu_ui);
-}
-
-void MenuScreen::update(const float& delta)
-{
-    
-}
-
-void MenuScreen::draw(const float& delta)
+void MainMenuUi::render()
 {
     ImVec2 menu_size = ImGui::GetWindowSize();
     ImVec2 menu_pos = ImGui::GetWindowPos();

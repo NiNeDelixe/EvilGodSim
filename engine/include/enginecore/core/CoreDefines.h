@@ -25,9 +25,11 @@ template <typename T> static inline T* getPtrHelper(const std::unique_ptr<T>& pt
 
 #define D_PTR(Class) Class##Private * const d = d_func()
 
+#define DECLARE_DPTR(Class) Class##Private d_ptr = std::shared_ptr<Class>
+
 #define DISABLE_COPY(Class) \
-    Class(const Class &); \
-    Class &operator=(const Class &);
+    private: Class(const Class &); \
+    private: Class &operator=(const Class &);
 
 #define ENGINE_NAMESPACE egengine
 #define ENGNMSP ENGINE_NAMESPACE
@@ -61,5 +63,10 @@ namespace glm
     using fixvec3 = glm::vec<3, fixedpoint_t, glm::defaultp>;
     using fixvec4 = glm::vec<4, fixedpoint_t, glm::defaultp>;
 }
+
+#if defined(USING_GLOBAL_RELOPS_NAMESPACE)
+using namespace std::rel_ops;
+#endif // USING_GLOBAL_RELOPS_NAMESPACE
+
 
 #endif // !ENGINE_COREDEFINES_H_
