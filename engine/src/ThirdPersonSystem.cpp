@@ -8,39 +8,15 @@ void ThirdPersonSystem::update(EntityRegistry<DefaultEntityIndentifier>& registr
     {
         auto& player_transform = player_view.template get<Transform>(player_entity);
 
-        glm::dvec3 movement(0.0f);
-
-        if (EngiApp->window()->events()->pressed(Keycode::W))
-        {
-            movement += player_transform.m_front * m_move_speed;
-        }
-        if (EngiApp->window()->events()->pressed(Keycode::S))
-        {
-            movement -= player_transform.m_front * m_move_speed;
-        }
-        if (EngiApp->window()->events()->pressed(Keycode::A))
-        {
-            movement -= glm::normalize(glm::cross(player_transform.m_front, player_transform.m_up)) * m_move_speed;
-        }
-        if (EngiApp->window()->events()->pressed(Keycode::D))
-        {
-            movement += glm::normalize(glm::cross(player_transform.m_front, player_transform.m_up)) * m_move_speed;
-        }
-
-        if (EngiApp->window()->events()->getScroll() < 0)
+        if (EngiApp->window()->events()->getScroll() > 0)
         {
             m_camera_distance = glm::clamp(m_camera_distance - m_zoom_speed, 
                                         m_min_camera_distance, m_max_camera_distance);
         }
-        if (EngiApp->window()->events()->getScroll() > 0)
+        if (EngiApp->window()->events()->getScroll() < 0)
         {
             m_camera_distance = glm::clamp(m_camera_distance + m_zoom_speed, 
                                         m_min_camera_distance, m_max_camera_distance);
-        }
-
-        if (glm::length(movement) > 0.0f)
-        {
-            player_transform.m_pos += movement * Time::deltaTime();
         }
 
         const auto& camera_view = registry.template view<Camera, Transform>();

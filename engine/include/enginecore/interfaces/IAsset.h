@@ -21,6 +21,8 @@ public:
 	const std::string getType() const { return typeid(*this).name(); }
 	virtual const bool& isLoaded() const { return m_is_loaded; }
 
+	virtual void reload() {}
+
 	virtual GETTER(std::filesystem::path, m_asset_path, Path);
 	virtual SETTER(std::filesystem::path, m_asset_path, Path);
 

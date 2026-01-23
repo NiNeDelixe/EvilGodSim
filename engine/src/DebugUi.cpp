@@ -76,15 +76,13 @@ void DebugUi::render()
                         0, nullptr, 0.0f, 200.0f, 
                         ImVec2(300, 80));
         
-        m_draw_calls = MeshStats::m_draw_calls;
-        m_triangles_count = MeshStats::m_triangles_count;
-        MeshStats::m_draw_calls = 0;
-        MeshStats::m_triangles_count = 0;
+        m_draw_calls = MeshStats::getDrawCalls();
+        m_triangles_count = MeshStats::getTrianglesCount();
 
         ImGui::Separator();
         ImGui::Text("Render Stats:");
         ImGui::Text("Draw Calls: %d", m_draw_calls);
-        ImGui::Text("Meshes: %d", MeshStats::m_meshes_count);
+        ImGui::Text("Meshes: %d", MeshStats::getMeshesCount());
         ImGui::Text("Triangles: %d", m_triangles_count);
         
         if (ImGui::Button("Reset Stats")) 
@@ -194,8 +192,10 @@ void DebugUi::render()
         
     }
     
+    
+    ImGui::Text("Press F1 to toggle cursor");
     ImGui::SameLine();
-    ImGui::Text("| Press F3 to toggle");
+    ImGui::Text("| Press F3 to toggle debug menu");
     
     ImGui::End();
 }

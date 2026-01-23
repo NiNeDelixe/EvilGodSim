@@ -13,8 +13,8 @@
 #include "enginecore/core/ecs/components/ModelComponent.h"
 
 #include "enginecore/interfaces/ISystem.h"
-
 #include "enginecore/core/window/Input.h"
+
 
 class ThirdPersonSystem : public ISystem
 {
@@ -26,8 +26,7 @@ public:
 	void update(EntityRegistry<DefaultEntityIndentifier>& registry) override;
 
 private:
-    float m_move_speed = 3.0f;
-    float m_rotation_speed = 2.0f;
+    //TODO: move to components
     float m_camera_distance = 5.0f;
     float m_camera_height = 6.0f;
     float m_min_camera_distance = 2.0f;

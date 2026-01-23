@@ -1,0 +1,4 @@
+*
+!.gitignore
+!*.code-snippets
+!.vscode/*.code-snippets

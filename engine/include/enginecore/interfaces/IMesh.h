@@ -8,6 +8,45 @@
 
 struct MeshStats
 {
+public:
+    static size_t getDrawCalls()
+    {
+        size_t result = m_draw_calls;
+        m_draw_calls = 0;
+        return result;
+    }
+    static size_t getTrianglesCount()
+    {
+        size_t result = m_triangles_count;
+        m_triangles_count = 0;
+        return result;
+    }
+    static size_t getMeshesCount()
+    {
+        return m_meshes_count;
+    }
+
+    static void incrementDrawCalls()
+    {
+        ++m_draw_calls;
+    }
+
+    static void addTrianglesCount(const size_t& value)
+    {
+        m_triangles_count += value;
+    }
+
+    static void incrementMeshesCount()
+    {
+        ++m_meshes_count;
+    }
+    
+    static void decrementMeshesCount()
+    {
+        ++m_meshes_count;
+    }
+
+private:
     static size_t m_draw_calls;
     static size_t m_triangles_count;
     static size_t m_meshes_count;
@@ -16,8 +55,8 @@ struct MeshStats
 class IMesh
 {
 public:
-    IMesh() { ++MeshStats::m_meshes_count; }
-    virtual ~IMesh() { --MeshStats::m_meshes_count; }
+    IMesh() { MeshStats::incrementMeshesCount(); }
+    virtual ~IMesh() { MeshStats::decrementMeshesCount(); }
 
 public:
     virtual void draw(const GLenum& primitive) const = 0;

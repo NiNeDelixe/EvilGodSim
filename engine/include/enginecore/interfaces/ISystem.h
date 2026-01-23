@@ -6,7 +6,10 @@
 
 enum SystemTypes
 {
-	CONTROLLING
+	OBJECT_CONTROLLING,
+	CAMERA_BEHAVIOR,
+	PHYSICS,
+	AI
 };
 
 class ISystem

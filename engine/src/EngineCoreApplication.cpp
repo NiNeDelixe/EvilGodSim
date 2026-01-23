@@ -116,7 +116,6 @@ void EngineCoreApplication::poll()
 		{
 			ui->update();
 		}
-		//std::for_each(m_uis.begin(), m_uis.end(), std::bind(&Ui::update));
 
 		this->prefix(); //Virtual prefix method
 
@@ -162,7 +161,9 @@ void EngineCoreApplication::loadAssets()
 
 void EngineCoreApplication::loadSystems()
 {
-	m_systems[SystemTypes::CONTROLLING] = std::make_shared<FreeFlySystem>();
+	m_systems[SystemTypes::CAMERA_BEHAVIOR] = std::make_shared<FreeFlySystem>();
+	//m_systems[SystemTypes::OBJECT_CONTROLLING] = std::make_shared<FreeFlySystem>();
+	//m_systems[SystemTypes::CAMERA_BEHAVIOR] = m_systems[SystemTypes::OBJECT_CONTROLLING];
 
 	auto entity = m_registry.create();
 	m_registry.emplace<Transform>(entity);
@@ -187,8 +188,6 @@ void EngineCoreApplication::prefix()
 	{
 		ui->render();
 	}
-	
-	//std::for_each(m_uis.begin(), m_uis.end(), std::bind(&Ui::render));
 }
 
 void EngineCoreApplication::postfix()

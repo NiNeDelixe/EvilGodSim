@@ -21,6 +21,7 @@ void ModelRenderer::render()
 		auto&& tran = EngiApp->getEntityRegistry().get<Transform>(ent);
 
 		glm::mat4 model = glm::translate(glm::mat4(1.0f)/*base*/, tran.m_pos/*pos*/);
+		model *= tran.m_rotation;
 		
 
 		shader->use();

@@ -36,6 +36,7 @@ void WorldRenderer::prepareShaders()
 		shader->use();
 
 		model = glm::translate(glm::mat4(1.0f)/*base*/, transform.m_pos/*pos*/);
+		model *= transform.m_rotation;
 		shader->uniform("u_model", model);
 	}
 

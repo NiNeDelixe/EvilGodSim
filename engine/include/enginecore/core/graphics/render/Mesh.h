@@ -61,12 +61,12 @@ public:
 
         glBindVertexArray(0);
 
-        ++MeshStats::m_meshes_count;
+        //++MeshStats::m_meshes_count;
     }
 
     virtual ~Mesh()
     {
-        --MeshStats::m_meshes_count;
+        //--MeshStats::m_meshes_count;
 
         glDeleteVertexArrays(1, &m_vao);
         glDeleteBuffers(1, &m_vbo);
@@ -107,7 +107,7 @@ public:
 
     void draw(const GLenum& primitive) const override
     {
-        ++MeshStats::m_draw_calls;
+        MeshStats::incrementDrawCalls();
         size_t triangle_count = 0;
 
         glBindVertexArray(m_vao);
@@ -157,7 +157,7 @@ public:
         }
         glBindVertexArray(0);
 
-        MeshStats::m_triangles_count += triangle_count;
+        MeshStats::addTrianglesCount(triangle_count);
     }
 
 	void draw() const

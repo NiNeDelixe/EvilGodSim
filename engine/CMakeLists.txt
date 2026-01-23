@@ -4,7 +4,7 @@ project(Engine)
 
 ####################################### Options #######################################
 
-option(GLOBAL_RELOPS_NAMESPACE "Use global std::rel_ops namespace" ON)
+option(GLOBAL_RELOPS_NAMESPACE "Use global std::rel_ops namespace" OFF)
 
 ####################################### Branding #######################################
 

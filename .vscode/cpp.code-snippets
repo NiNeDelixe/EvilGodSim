@@ -1,0 +1,23 @@
+{
+    "Create System Class": {
+        "prefix": "system",
+        "body": [
+            "#include <enginecore/core/CoreDefines.h>",
+            "",
+            "#include <enginecore/interfaces/ISystem.h>",
+            "",
+            "class ${1:$TM_FILENAME_BASE} : public ISystem",
+            "{",
+            "public:",
+            "    ${1:$TM_FILENAME_BASE}() = default;",
+            "    ~${1:$TM_FILENAME_BASE}() = default;",
+            "",
+            "public:",
+            "    void update(EntityRegistry<DefaultEntityIndentifier>& registry) override;",
+            "",
+            "private:",
+            "    $0",
+            "};"
+        ]
+    }
+}
