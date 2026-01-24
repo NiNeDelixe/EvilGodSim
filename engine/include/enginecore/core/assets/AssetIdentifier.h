@@ -4,11 +4,11 @@
 
 #include "enginecore/core/CoreDefines.h"
 
-class Identifier
+class AssetIdentifier
 {
 public:
-	Identifier(const std::string& namespace_name, const std::string& asset_name);
-	~Identifier() = default;
+	AssetIdentifier(const std::string& namespace_name, const std::string& asset_name);
+	~AssetIdentifier() = default;
 
 public:
 	GETTER(std::string, m_asset_name, AssetName);

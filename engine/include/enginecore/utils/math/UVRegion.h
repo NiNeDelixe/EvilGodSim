@@ -55,6 +55,16 @@ public:
         m_v2 = cy + h * 0.5f * y;
     }
 
+    SSETTER(float, m_u1, u1)
+    SSETTER(float, m_v1, v1)
+    SSETTER(float, m_u2, u2)
+    SSETTER(float, m_v2, v2)
+
+    SGETTER(float, m_u1, u1)
+    SGETTER(float, m_v1, v1)
+    SGETTER(float, m_u2, u2)
+    SGETTER(float, m_v2, v2)
+
 public:
     float m_u1;
     float m_v1;

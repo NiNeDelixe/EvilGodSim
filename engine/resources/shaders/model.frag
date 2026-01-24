@@ -1,8 +1,14 @@
 #version 330 core
 
-uniform vec4 u_color;
+in vec2 i_tex_coord;
+out vec4 o_frag_color;
 
-void main()
+uniform sampler2D u_texture0;
+
+void main() 
 {
-    gl_FragColor = u_color;
+    vec4 texColor = texture(u_texture0, i_tex_coord);
+    if(texColor.a < 0.1)
+        discard;
+    o_frag_color = texColor;
 }

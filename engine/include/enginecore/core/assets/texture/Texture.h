@@ -11,7 +11,7 @@
 #include "enginecore/core/CoreDefines.h"
 #include "enginecore/core/assets/texture/ImageData.h"
 #include "enginecore/interfaces/IAsset.h"
-
+#include "enginecore/utils/math/UVRegion.h"
 
 class Texture;
 
@@ -90,6 +90,8 @@ public:
 public:
 	const std::shared_ptr<ubyte_t[]>& getBytesArray() { return m_image_data->getBytesArray(); }
 	const std::weak_ptr<ImageData>& getImageData() { return m_image_data; }
+
+	const UVRegion getUVRegion() const { return UVRegion(0.0f, 0.0f, 1.0f, 1.0f); }
 
 	const uint_t& getWidth() const { return m_image_data->getWidth(); }
 	const uint_t& getHeight() const { return m_image_data->getHeight(); }

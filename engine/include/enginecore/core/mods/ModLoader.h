@@ -9,18 +9,20 @@
 
 #include <glog/logging.h>
 
+#include "enginecore/utils/platform/SystemDetection.h"
+
 #include "enginecore/core/mods/IGameMod.h"
 #include "enginecore/core/mods/ModPaths.h"
 #include "enginecore/core/EnginePaths.h"
 
-#include "enginecore/utils/platform/SystemDetection.h"
-
-#if defined(E_OS_WINDOWS)
+#if defined(E_OS_WINDOWS) && defined(ENGINE_USE_WINDOWS_HEADER)
 #include <windows.h>
 using LibHandle = HMODULE;
 #elif defined(E_OS_LINUX) || defined(E_OS_DARWIN)
 #include <dlfcn.h>
 using LibHandle = void*;
+#else
+using LibHandle = bool;
 #endif
 
 #ifdef ERROR

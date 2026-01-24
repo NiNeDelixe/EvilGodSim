@@ -4,7 +4,7 @@ project(Engine)
 
 ####################################### Options #######################################
 
-option(GLOBAL_RELOPS_NAMESPACE "Use global std::rel_ops namespace" OFF)
+option(ENGINE_USE_WINDOWS_HEADER "Use windows header for modding on win, may sending some warnigs from glfw3" ON)
 
 ####################################### Branding #######################################
 
@@ -94,6 +94,6 @@ target_link_libraries(${PROJECT_NAME}
 		fixed_math::fixed_math
 )
 
-if(GLOBAL_RELOPS_NAMESPACE)
-	target_compile_definitions(${PROJECT_NAME} PUBLIC -DUSING_GLOBAL_RELOPS_NAMESPACE)	
-endif(GLOBAL_RELOPS_NAMESPACE)
+if(${ENGINE_USE_WINDOWS_HEADER})
+	target_compile_definitions(${PROJECT_NAME} PUBLIC -DENGINE_USE_WINDOWS_HEADER)	
+endif(${ENGINE_USE_WINDOWS_HEADER})

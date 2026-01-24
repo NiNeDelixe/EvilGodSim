@@ -7,6 +7,10 @@
 #include <GL/glew.h>
 
 #include "enginecore/core/window/BaseWindow.h"
+#include "enginecore/core/graphics/render/Batch2D.h"
+
+#include "enginecore/interfaces/IBindable.h"
+#include "enginecore/interfaces/IFlushable.h"
 
 enum class BlendMode 
 {
@@ -18,48 +22,24 @@ enum class BlendMode
     inversion
 };
 
-class Flushable 
-{
-public:
-    virtual ~Flushable() = default;
-
-    virtual void flush() const = 0;
-};
-
-class Bindable 
-{
-public:
-    virtual ~Bindable() = default;
-
-    virtual void bind() const = 0;
-    virtual void unbind() const = 0;
-};
-
 class DrawContext 
 {    
 public:
-    DrawContext(
-        const DrawContext* parent,
-        std::weak_ptr<BaseWindow> window
-        //Batch2D* g2d
-    )
-        : m_window(window),
-        m_parent(parent),
-        m_current_viewport(window.lock()->viewports()[0]->getSize())
-        //g2d(g2d),
-        //flushable(g2d)
-    {
-    }
+    DrawContext(const DrawContext* parent, std::weak_ptr<BaseWindow> window, std::shared_ptr<Batch2D> g2d);
     ~DrawContext();
 
-    //Batch2D* getBatch2D() const;
-
-    [[nodiscard]] DrawContext sub(const Flushable* const flushable = nullptr) const;
-
+private:
     static void setGlBlendMode(const BlendMode& mode);
 
+public:
+    GETTER(std::shared_ptr<Batch2D>, m_g2d, Batch2D)
+
+public:
+    [[nodiscard]] DrawContext sub(std::shared_ptr<IFlushable> flushable = nullptr) const;
+
+
     void setViewport(const glm::uvec2& viewport);
-    void setFramebuffer(const Bindable* const fbo);
+    void setFramebuffer(const IBindable* const fbo);
     void setDepthMask(const bool& flag);
     void setDepthTest(const bool& flag);
     void setCullFace(const bool& flag);
@@ -71,9 +51,9 @@ private:
     std::weak_ptr<BaseWindow> m_window;
     const DrawContext* m_parent;
     glm::ivec2 m_current_viewport;
-    //Batch2D* g2d;
-    const Flushable* m_flushable = nullptr;
-    const Bindable* m_fbo = nullptr;
+    std::shared_ptr<Batch2D> m_g2d;
+    std::weak_ptr<IFlushable> m_flushable;
+    const IBindable* m_fbo = nullptr;
     bool m_depth_mask = true;
     bool m_depth_test = false;
     bool m_cull_face = false;

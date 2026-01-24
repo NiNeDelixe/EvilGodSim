@@ -3,11 +3,14 @@
 #define UTILS_TIMEUTILS_H_
 
 #include "enginecore/core/CoreDefines.h"
+
 #include "enginecore/utils/platform/SystemDetection.h"
 
-#ifdef E_OS_WIN
+#if defined(E_OS_WIN) && defined(ENGINE_USE_WINDOWS_HEADER)
 #include <Windows.h>
 #pragma comment(lib, "winmm.lib")
+#else
+#include <thread>
 #endif //E_OS_WIN
 
 namespace UTILS_NAMESPACE
@@ -16,7 +19,7 @@ namespace UTILS_NAMESPACE
     {
         static inline void sleep(const size_t& millis)
         {
-#ifdef E_OS_WIN
+#if defined(E_OS_WIN) && defined(ENGINE_USE_WINDOWS_HEADER)
             static const UINT periodMin = [] {
                 TIMECAPS tc;
                 timeGetDevCaps(&tc, sizeof(TIMECAPS));

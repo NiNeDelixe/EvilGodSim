@@ -1,10 +1,16 @@
 #include "enginecore/core/graphics/render/DrawContext.h"
 
+DrawContext::DrawContext(const DrawContext *parent, std::weak_ptr<BaseWindow> window, std::shared_ptr<Batch2D> g2d)
+    : m_window(window), m_parent(parent), m_current_viewport(window.lock()->viewports()[0]->getSize()),
+    m_g2d(g2d), m_flushable(g2d)
+{
+}
+
 DrawContext::~DrawContext()
 {
-    if (m_flushable)
+    if (!m_flushable.expired())
     {
-        m_flushable->flush();
+        m_flushable.lock()->flush();
     }
 
     while (m_scissors_count--)
@@ -49,7 +55,7 @@ DrawContext::~DrawContext()
     }
     if (m_blend_mode != m_parent->m_blend_mode) 
     {
-        DrawContext::setBlendMode(m_parent->m_blend_mode);
+        DrawContext::setGlBlendMode(m_parent->m_blend_mode);
     }
     if (m_line_width != m_parent->m_line_width) 
     {
@@ -57,15 +63,15 @@ DrawContext::~DrawContext()
     }
 }
 
-DrawContext DrawContext::sub(const Flushable* const flushable) const
+DrawContext DrawContext::sub(std::shared_ptr<IFlushable> flushable) const
 {
     auto ctx = DrawContext(*this);
     ctx.m_parent = this;
     ctx.m_flushable = flushable;
     ctx.m_scissors_count = 0;
-    /*if (auto batch2D = dynamic_cast<Batch2D*>(flushable)) {
-        ctx.g2d = batch2D;
-    }*/
+    if (auto batch2D = std::dynamic_pointer_cast<Batch2D>(flushable)) {
+        ctx.m_g2d = batch2D;
+    }
     return ctx;
 }
 
@@ -91,7 +97,7 @@ void DrawContext::setViewport(const glm::uvec2& viewport)
     glViewport(0, 0, viewport.x, viewport.y);
 }
 
-void DrawContext::setFramebuffer(const Bindable* const fbo)
+void DrawContext::setFramebuffer(const IBindable* const fbo)
 {
     if (this->m_fbo == fbo)
         return;
@@ -145,7 +151,7 @@ void DrawContext::setBlendMode(const BlendMode& mode)
     if (m_blend_mode == mode)
         return;
     m_blend_mode = mode;
-    DrawContext::setBlendMode(mode);
+    DrawContext::setGlBlendMode(mode);
 }
 
 void DrawContext::setScissors(const glm::vec4& area)

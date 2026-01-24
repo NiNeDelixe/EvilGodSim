@@ -13,7 +13,7 @@
 
 #include "enginecore/core/assets/AssetsManager.h"
 #include "enginecore/core/assets/AssetsLoader.h"
-#include "enginecore/core/assets/Identifier.h"
+#include "enginecore/core/assets/AssetIdentifier.h"
 
 #include "enginecore/core/EnginePaths.h"
 
@@ -39,7 +39,7 @@ public:
 public:
 	template<CONCEPTS_NAMESPACE::IsDerivedFromIGameAsset T>
 	static std::shared_ptr<T> registry(const AssetsRegistry::GameAssetType& type,
-		const std::shared_ptr<Identifier>& identifier, const std::shared_ptr<T>& asset_class)
+		const std::shared_ptr<AssetIdentifier>& identifier, const std::shared_ptr<T>& asset_class)
 	{
 		//identifier->getAssetName();
 		//m_loader.lock()->addResource();

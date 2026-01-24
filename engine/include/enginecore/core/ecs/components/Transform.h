@@ -20,6 +20,13 @@ public:
         m_front = glm::normalize(m_front);
         m_up = glm::normalize(m_up);
 
+        // if (glm::length(m_up) < 0.001f)
+        //     m_up = glm::vec3(0, 1, 0);
+
+        // m_front = glm::normalize(glm::vec3(m_rotation * glm::vec4(0, 0, 1, 0)));
+        // m_up    = glm::normalize(glm::vec3(m_rotation * glm::vec4(0, 1, 0, 0)));
+
+
         updateEulerAnglesFromMatrix();
     }
 };

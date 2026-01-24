@@ -2,14 +2,13 @@
 
 void ModelRenderer::render()
 {
-	/*EngiApp->ctx().lock()->setDepthTest(true);
-	EngiApp->ctx().lock()->setBlendMode(BlendMode::normal);*/
-	EngiApp->ctx().lock()->setDepthTest(true);
+	auto ldrc = EngiApp->ctx().lock()->sub();
 
-	//EngiApp->ctx().lock()->setBlendMode(BlendMode::addition);
-
-	/*glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);*/
+	//ldrc.setBlendMode(BlendMode::normal);
+	//ldrc.setBlendMode(BlendMode::addition);
+	ldrc.setBlendMode(BlendMode::inversion);
+	ldrc.setDepthTest(true);
+	ldrc.setCullFace(true);
 
 	const auto& shader = EngiApp->assets().lock()->get<GLShader>("model");
 

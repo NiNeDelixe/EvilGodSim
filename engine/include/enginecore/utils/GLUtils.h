@@ -2,9 +2,10 @@
 #ifndef UTILS_GLUTILS_H_
 #define UTILS_GLUTILS_H_
 
+#include "enginecore/core/CoreDefines.h"
+
 #include <GL/glew.h>
 
-#include "enginecore/core/CoreDefines.h"
 #include "enginecore/core/assets/texture/Texture.h"
 
 namespace ENGINE_NAMESPACE
@@ -13,6 +14,13 @@ namespace ENGINE_NAMESPACE
     {
         namespace gl
         {
+            enum class DrawPrimitive 
+            {
+                point = 0,
+                line,
+                triangle,
+            };
+
             /// @brief Vertex attribute info
             struct VertexAttribute
             {
@@ -53,6 +61,16 @@ namespace ENGINE_NAMESPACE
                     return 0;
                 }
             };
+
+            inline GLenum to_glenum(DrawPrimitive primitive) 
+            {
+                static const GLenum primitives[]{
+                    GL_POINTS,
+                    GL_LINES,
+                    GL_TRIANGLES
+                };
+                return primitives[static_cast<int>(primitive)];
+            }
 
             inline GLenum to_glenum(const VertexAttribute::Type& type)
             {

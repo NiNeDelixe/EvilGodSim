@@ -53,7 +53,10 @@ constexpr auto ENGINE_LOGS_DIRECTORY = "logs";
 #define DECLARE_WPTR(Class) using WeakPtr = std::weak_ptr<Class>;
 
 #define GETTER(type, field, Name) const type& get##Name() const { return this->field; }  
-#define SETTER(type, field, Name) void set##Name(const type& value) { this->field = value; }  
+#define SETTER(type, field, Name) void set##Name(const type& value) { this->field = value; } 
+
+#define SSETTER(type, field, Name) void Name(const type& value) { this->field = value; }  
+#define SGETTER(type, field, Name) const type& Name() const { return this->field; }  
 
 using fixedpoint_t = float;
 
@@ -63,10 +66,6 @@ namespace glm
     using fixvec3 = glm::vec<3, fixedpoint_t, glm::defaultp>;
     using fixvec4 = glm::vec<4, fixedpoint_t, glm::defaultp>;
 }
-
-#if defined(USING_GLOBAL_RELOPS_NAMESPACE)
-using namespace std::rel_ops;
-#endif // USING_GLOBAL_RELOPS_NAMESPACE
 
 
 #endif // !ENGINE_COREDEFINES_H_

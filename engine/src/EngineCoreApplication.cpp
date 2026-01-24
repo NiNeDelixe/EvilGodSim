@@ -56,7 +56,7 @@ EngineCoreApplication::EngineCoreApplication(int& argc, char** argv)
 	loadAssets();
 	loadSystems();
 
-	this->m_ctx = std::make_shared<DrawContext>(nullptr, this->m_window);
+	this->m_ctx = std::make_shared<DrawContext>(nullptr, this->m_window, std::make_shared<Batch2D>(1024));
 
 	// this->m_fps_counter = std::make_shared<FPSCounter>();
 

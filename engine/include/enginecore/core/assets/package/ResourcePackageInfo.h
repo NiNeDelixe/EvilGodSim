@@ -1,6 +1,6 @@
 #pragma once
-#ifndef PACKAGES_RESOURCEPACKAGE_H_
-#define PACKAGES_RESOURCEPACKAGE_H_
+#ifndef PACKAGES_RESOURCEPACKAGEINFO_H_
+#define PACKAGES_RESOURCEPACKAGEINFO_H_
 
 #include <string>
 #include <vector>
@@ -20,11 +20,11 @@ struct DependencyPack
     std::string id;
 };
 
-class ResourcePackage
+class ResourcePackageInfo
 {
 public:
-	ResourcePackage() = default;
-	~ResourcePackage() = default;
+	ResourcePackageInfo() = default;
+	~ResourcePackageInfo() = default;
 
 public:
     static inline const std::string PACKAGE_FILENAME = "package.json";
@@ -33,6 +33,7 @@ public:
     static inline const std::filesystem::path ITEMS_FOLDER = "items";
     static inline const std::filesystem::path ENTITIES_FOLDER = "entities";
     static inline const std::filesystem::path GENERATORS_FOLDER = "generators";
+    static inline const std::filesystem::path OVERRIDE_FOLDER = "override";
     static const std::vector<std::string> RESERVED_NAMES;
 
 private:
@@ -48,4 +49,4 @@ private:
 };
 
 
-#endif // !PACKAGES_RESOURCEPACKAGE_H_
+#endif // !PACKAGES_RESOURCEPACKAGEINFO_H_

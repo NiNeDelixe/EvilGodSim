@@ -84,8 +84,8 @@ public:
 
 	const std::shared_ptr<BaseWindow>& window() const { return m_window; }
 	const std::weak_ptr<AssetsManager>& assets() const { return m_assets_manager; }
-	const std::weak_ptr<EnginePaths>& paths() const { return m_paths; }
-	const std::weak_ptr<DrawContext>& ctx() const { return m_ctx; }
+	std::weak_ptr<EnginePaths> paths() const { return m_paths; }
+	std::weak_ptr<DrawContext> ctx() const { return m_ctx; }
 	const std::weak_ptr<AssetsLoader>& getAssetsLoader() const { return m_assets_loader; }
 	// const std::weak_ptr<FPSCounter>& fpsStats() const { return m_fps_counter; }
 

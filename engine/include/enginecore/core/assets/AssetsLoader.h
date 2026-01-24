@@ -76,6 +76,7 @@ private:
 	template <class _Ty, class... _Types>
 	friend _CONSTEXPR20 void std::_Construct_in_place(_Ty& _Obj, _Types&&... _Args);
 
+private:
 	std::map<AssetType, std::shared_ptr<IAssetLoader>> m_loaders;
 	std::queue<loaderentry> m_entries;
 	std::set<std::pair<AssetType, std::string>> m_enqueued;

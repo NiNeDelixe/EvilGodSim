@@ -52,14 +52,27 @@ private:
     static size_t m_meshes_count;
 };
 
+struct IndexBufferData 
+{
+    const uint32_t* indices;
+    size_t indices_count;
+};
+
 class IMesh
 {
+protected:
+    struct IndexBuffer 
+    {
+        unsigned int ibo;
+        size_t index_count;
+    };
+
 public:
     IMesh() { MeshStats::incrementMeshesCount(); }
     virtual ~IMesh() { MeshStats::decrementMeshesCount(); }
 
 public:
-    virtual void draw(const GLenum& primitive) const = 0;
+    virtual void draw(const GLenum& primitive, const size_t& ibo_index = 0) const = 0;
     virtual void reload(const float* const vertex_buffer, const size_t& vertices,
         const size_t* const index_buffer, const size_t& indices) = 0;
 

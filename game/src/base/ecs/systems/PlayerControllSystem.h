@@ -25,6 +25,7 @@ public:
     void update(EntityRegistry<DefaultEntityIndentifier>& registry) override;
 
 private:
+    //TODO: move to component
     float m_move_speed = 3.0f;
     float m_rotation_speed = 2.0f;
 };

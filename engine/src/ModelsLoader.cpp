@@ -77,7 +77,6 @@ std::vector<float> ModelsLoader::extractVertexData(aiMesh* mesh)
         // Position
         vertexData.push_back(mesh->mVertices[i].x);
         vertexData.push_back(mesh->mVertices[i].y);
-        //vertexData.push_back(-mesh->mVertices[i].y);
         vertexData.push_back(mesh->mVertices[i].z);
 
         // UV coordinates
@@ -85,7 +84,6 @@ std::vector<float> ModelsLoader::extractVertexData(aiMesh* mesh)
         {
             vertexData.push_back(mesh->mTextureCoords[0][i].x);
             vertexData.push_back(mesh->mTextureCoords[0][i].y);
-            //vertexData.push_back(1.0f - mesh->mTextureCoords[0][i].y);
         }
         else
         {

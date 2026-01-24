@@ -1,5 +1,5 @@
 {
-    "Create System Class": {
+    "Create system class": {
         "prefix": "system",
         "body": [
             "#include <enginecore/core/CoreDefines.h>",
@@ -17,6 +17,59 @@
             "",
             "private:",
             "    $0",
+            "};"
+        ]
+    },
+    "Create system class engine": {
+        "prefix": "systemeng",
+        "body": [
+            "#include \"enginecore/core/CoreDefines.h\"",
+            "",
+            "#include \"enginecore/interfaces/ISystem.h\"",
+            "",
+            "class ${1:$TM_FILENAME_BASE} : public ISystem",
+            "{",
+            "public:",
+            "    ${1:$TM_FILENAME_BASE}() = default;",
+            "    ~${1:$TM_FILENAME_BASE}() = default;",
+            "",
+            "public:",
+            "    void update(EntityRegistry<DefaultEntityIndentifier>& registry) override;",
+            "",
+            "private:",
+            "    $0",
+            "};"
+        ]
+    },
+    "Create component class": {
+        "prefix": "component",
+        "body": [
+            "#include <enginecore/core/CoreDefines.h>",
+            "",
+            "#include <glm/glm.hpp>",
+            "",
+            "#include <enginecore/interfaces/IComponent.h>",
+            "",
+            "class ${1:$TM_FILENAME_BASE} : public IComponent",
+            "{",
+            "public:",
+            "   $0",
+            "};"
+        ]
+    },
+    "Create component class engine": {
+        "prefix": "componenteng",
+        "body": [
+            "#include \"enginecore/core/CoreDefines.h\"",
+            "",
+            "#include <glm/glm.hpp>",
+            "",
+            "#include \"enginecore/interfaces/IComponent.h\"",
+            "",
+            "class ${1:$TM_FILENAME_BASE} : public IComponent",
+            "{",
+            "public:",
+            "   $0",
             "};"
         ]
     }
