@@ -4,9 +4,9 @@ void ModelRenderer::render()
 {
 	auto ldrc = EngiApp->ctx().lock()->sub();
 
-	//ldrc.setBlendMode(BlendMode::normal);
+	ldrc.setBlendMode(BlendMode::normal);
 	//ldrc.setBlendMode(BlendMode::addition);
-	ldrc.setBlendMode(BlendMode::inversion);
+	//ldrc.setBlendMode(BlendMode::inversion);
 	ldrc.setDepthTest(true);
 	ldrc.setCullFace(true);
 

@@ -137,7 +137,7 @@ public:
 
         if (index_buffer && indices)
         {
-            m_ibos.push_back(IndexBuffer{0, indices});
+            m_ibos.emplace_back(0, indices);
 
             glGenBuffers(1, &m_ibos[0].ibo);
             glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ibos[0].ibo);
@@ -179,8 +179,8 @@ public:
         for (size_t i = 0; i < indices.size(); i++) 
         {
             const auto& indexBuffer = indices[i];
-            m_ibos.push_back(IndexBuffer {0, 0});
-            //m_ibos.emplace_back({0, 0});
+            //m_ibos.push_back(IndexBuffer {0, 0});
+            m_ibos.emplace_back(0, 0);
 
             glGenBuffers(1, &m_ibos[i].ibo);
             m_ibos[i].index_count = indexBuffer.indices_count;
