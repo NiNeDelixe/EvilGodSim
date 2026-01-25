@@ -70,7 +70,7 @@ public:
 
 	Mesh(const float* const vertex_buffer, const size_t& vertices, const unsigned int* index_buffer,
 		const size_t& indices)
-        : /*m_ibo(0),*/ m_vertices_count(0), m_ibos()//, m_indices(0)
+        : m_ibo(0), m_vertices_count(0), m_ibos(), m_indices(0)
     {
         static_assert(calc_size(VERTEXATRIBUTE::ATTRIBUTES) == sizeof(VERTEXATRIBUTE),
             "The size of the struct must match the size of the attributes");
@@ -107,49 +107,39 @@ public:
         {
             glDeleteBuffers(1, &m_ibos[i].ibo);
         }
-        // if (m_ibo != 0)
-        //     glDeleteBuffers(1, &m_ibo);
+        if (m_ibo != 0)
+            glDeleteBuffers(1, &m_ibo);
     }
 
 public:
     void reload(const float* const vertex_buffer, const size_t& vertices, const size_t* const index_buffer, const size_t& indices) override
     {
         m_vertices_count = vertices;
+        m_indices = indices;
 
         glBindVertexArray(m_vao);
         glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
 
-        if (vertex_buffer && vertices)
+        if (vertex_buffer != nullptr && vertices != 0)
         {
-            glBufferData(
-                GL_ARRAY_BUFFER,
-                vertices * sizeof(VERTEXATRIBUTE),
-                vertex_buffer,
-                GL_STREAM_DRAW
-            );
+            glBufferData(GL_ARRAY_BUFFER, vertices * sizeof(VERTEXATRIBUTE), vertex_buffer, GL_STREAM_DRAW);
         }
         else
         {
-            glBufferData(GL_ARRAY_BUFFER, 0, nullptr, GL_STREAM_DRAW);
+            glBufferData(GL_ARRAY_BUFFER, 0, {}, GL_STREAM_DRAW);
         }
 
-        m_ibos.clear();
-
-        if (index_buffer && indices)
+        if (index_buffer != nullptr && indices != 0)
         {
-            m_ibos.emplace_back(0, indices);
-
-            glGenBuffers(1, &m_ibos[0].ibo);
-            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ibos[0].ibo);
-            glBufferData(
-                GL_ELEMENT_ARRAY_BUFFER,
-                sizeof(uint32_t) * indices,
-                index_buffer,
-                GL_STATIC_DRAW
-            );
+            if (m_ibo == 0)
+                glGenBuffers(1, &m_ibo);
+            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ibo);
+            glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint32_t) * indices, index_buffer, GL_STATIC_DRAW);
         }
-
-        glBindVertexArray(0);
+        else if (m_ibo != 0)
+        {
+            glDeleteBuffers(1, &m_ibo);
+        }
     }
 
     void reload(const VERTEXATRIBUTE* vertexBuffer, size_t vertexCount, const std::vector<IndexBufferData>& indices)
@@ -179,7 +169,6 @@ public:
         for (size_t i = 0; i < indices.size(); i++) 
         {
             const auto& indexBuffer = indices[i];
-            //m_ibos.push_back(IndexBuffer {0, 0});
             m_ibos.emplace_back(0, 0);
 
             glGenBuffers(1, &m_ibos[i].ibo);
@@ -209,24 +198,8 @@ public:
         glBindVertexArray(m_vao);
         if (!m_ibos.empty())
         {
-            if (iboIndex < m_ibos.size()) {
-                // switch (primitive)
-                // {
-                //     case GL_TRIANGLES:
-                //         triangle_count = m_indices / 3;
-                //         break;
-                //     case GL_TRIANGLE_STRIP:
-                //     case GL_TRIANGLE_FAN:
-                //         triangle_count = (m_indices >= 3) ? (m_indices - 2) : 0;
-                //         break;
-                //     case GL_QUADS:
-                //         triangle_count = (m_indices / 4) * 2;
-                //         break;
-                //     default:
-                //         // For non-triangle primitives, count as 0
-                //         triangle_count = 0;
-                //         break;
-                // }
+            if (iboIndex < m_ibos.size()) 
+            {
 
                 glBindVertexArray(m_vao);
                 glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ibos[iboIndex].ibo);
@@ -234,6 +207,28 @@ public:
                     primitive, m_ibos.at(iboIndex).index_count, GL_UNSIGNED_INT, nullptr
                 );
             }
+        }
+        else if (m_ibo != 0)
+        {
+            switch (primitive)
+            {
+                case GL_TRIANGLES:
+                    triangle_count = m_indices / 3;
+                    break;
+                case GL_TRIANGLE_STRIP:
+                case GL_TRIANGLE_FAN:
+                    triangle_count = (m_indices >= 3) ? (m_indices - 2) : 0;
+                    break;
+                case GL_QUADS:
+                    triangle_count = (m_indices / 4) * 2;
+                    break;
+                default:
+                    // For non-triangle primitives, count as 0
+                    triangle_count = 0;
+                    break;
+            }
+
+            glDrawElements(primitive, m_indices, GL_UNSIGNED_INT, nullptr);
         }
         else if (m_vertices_count > 0)
         {
@@ -271,8 +266,8 @@ public:
 private:
 	uint32_t m_vao;
 	uint32_t m_vbo;
-	// uint32_t m_ibo;
-	// size_t m_indices;
+	uint32_t m_ibo;
+	size_t m_indices;
     std::vector<IndexBuffer> m_ibos;
 	size_t m_vertices_count;
 };
