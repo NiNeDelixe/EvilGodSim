@@ -11,6 +11,7 @@
 #include "enginecore/core/Time.h"
 
 #include "enginecore/core/ecs/components/ModelComponent.h"
+#include <enginecore/core/ecs/components/PlayerComponent.h>
 
 #include "enginecore/interfaces/ISystem.h"
 #include "enginecore/core/window/Input.h"

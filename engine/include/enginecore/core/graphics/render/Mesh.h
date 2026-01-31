@@ -34,7 +34,7 @@ class Mesh : public IMesh
 {
 public:
     Mesh(const VERTEXATRIBUTE* vertexBuffer, size_t vertices, std::vector<IndexBufferData> indices = {})
-    : m_vao(0), m_vbo(0), m_ibos(), m_vertices_count(0) 
+    : m_vao(0), m_vbo(0), m_ibos(), m_vertices_count(0), m_created_old(false)
     {
         static_assert(
             calc_size(VERTEXATRIBUTE::ATTRIBUTES) == sizeof(VERTEXATRIBUTE)
@@ -70,7 +70,7 @@ public:
 
 	Mesh(const float* const vertex_buffer, const size_t& vertices, const unsigned int* index_buffer,
 		const size_t& indices)
-        : m_ibo(0), m_vertices_count(0), m_ibos(), m_indices(0)
+        : m_ibo(0), m_vertices_count(0), m_ibos(), m_indices(0), m_created_old(true)
     {
         static_assert(calc_size(VERTEXATRIBUTE::ATTRIBUTES) == sizeof(VERTEXATRIBUTE),
             "The size of the struct must match the size of the attributes");
@@ -208,7 +208,7 @@ public:
                 );
             }
         }
-        else if (m_ibo != 0)
+        else if (m_ibo != 0 && m_created_old)
         {
             switch (primitive)
             {
@@ -253,6 +253,7 @@ public:
             glBindVertexArray(m_vao);
             glDrawArrays(primitive, 0, m_vertices_count);
         }
+
         glBindVertexArray(0);
 
         MeshStats::addTrianglesCount(triangle_count);
@@ -270,6 +271,8 @@ private:
 	size_t m_indices;
     std::vector<IndexBuffer> m_ibos;
 	size_t m_vertices_count;
+
+    bool m_created_old;
 };
 
 #endif // !RENDER_MESH_H_

@@ -46,8 +46,6 @@
         "body": [
             "#include <enginecore/core/CoreDefines.h>",
             "",
-            "#include <glm/glm.hpp>",
-            "",
             "#include <enginecore/interfaces/IComponent.h>",
             "",
             "class ${1:$TM_FILENAME_BASE} : public IComponent",
@@ -61,8 +59,6 @@
         "prefix": "componenteng",
         "body": [
             "#include \"enginecore/core/CoreDefines.h\"",
-            "",
-            "#include <glm/glm.hpp>",
             "",
             "#include \"enginecore/interfaces/IComponent.h\"",
             "",

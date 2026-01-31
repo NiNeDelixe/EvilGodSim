@@ -10,6 +10,7 @@
 
 #include <glm/glm.hpp>
 #include <GL/glew.h>
+#include "enginecore/utils/TimeUtils.h" // windows goes brrr
 #include <GLFW/glfw3.h>
 
 #include <glog/logging.h>
@@ -24,7 +25,6 @@
 #include "enginecore/core/assets/texture/Texture.h"
 
 #include "enginecore/utils/platform/SystemDetection.h"
-#include "enginecore/utils/TimeUtils.h"
 
 #ifdef MAX
 #undef MAX

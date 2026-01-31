@@ -2,12 +2,11 @@
 
 void ThirdPersonSystem::update(EntityRegistry<DefaultEntityIndentifier>& registry)
 {
-    const auto& player_view = registry.template view<ModelComponent, Transform>();
+    const auto& player_view = registry.template view<ModelComponent, Transform, PlayerComponent>();
+    const auto& camera_view = registry.template view<Camera, Transform>();
 
-    for (const auto& player_entity : player_view)
+    for (auto&& [player_entity, model_c, player_transform, player_c] : player_view.each())
     {
-        auto& player_transform = player_view.template get<Transform>(player_entity);
-
         if (EngiApp->window()->events()->getScroll() > 0)
         {
             m_camera_distance = glm::clamp(m_camera_distance - m_zoom_speed, 
@@ -19,13 +18,8 @@ void ThirdPersonSystem::update(EntityRegistry<DefaultEntityIndentifier>& registr
                                         m_min_camera_distance, m_max_camera_distance);
         }
 
-        const auto& camera_view = registry.template view<Camera, Transform>();
-
-        for (const auto& camera_entity : camera_view)
+        for (auto&& [camera_entity, camera, camera_transform] : camera_view.each())
         {
-            auto& camera = camera_view.template get<Camera>(camera_entity);
-            auto& camera_transform = camera_view.template get<Transform>(camera_entity);
-
             glm::vec3 desired_camera_pos = player_transform.m_pos;
             desired_camera_pos -= player_transform.m_front * m_camera_distance;
             desired_camera_pos.y += m_camera_height;

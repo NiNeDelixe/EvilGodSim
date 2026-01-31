@@ -11,6 +11,7 @@
 #include <enginecore/core/Time.h>
 
 #include <enginecore/core/ecs/components/ModelComponent.h>
+#include <enginecore/core/ecs/components/PlayerComponent.h>
 
 #include <enginecore/interfaces/ISystem.h>
 #include <enginecore/core/window/Input.h>
@@ -26,8 +27,8 @@ public:
 
 private:
     //TODO: move to component
-    float m_move_speed = 3.0f;
-    float m_rotation_speed = 2.0f;
+    float m_move_speed = 5.0f;
+    float m_rotation_speed = 0.5f;
 };
 
 #endif  // SYSTEMS_PLAYERCONTROLLSYSTEM_H_

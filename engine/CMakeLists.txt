@@ -6,6 +6,8 @@ project(Engine)
 
 option(ENGINE_USE_WINDOWS_HEADER "Use windows header for modding on win, may sending some warnigs from glfw3" ON)
 
+set(ENTT_INCLUDE_NATVIS ON)
+
 ####################################### Branding #######################################
 
 set(ENGINE_Project_CommonName "EvilGodEngine")

@@ -10,15 +10,16 @@ void ModelRenderer::render()
 	ldrc.setDepthTest(true);
 	ldrc.setCullFace(true);
 
+	ldrc.getBatch2D()->begin();
+	ldrc.getBatch2D()->rect(1, 1, 2, 3);
+	ldrc.getBatch2D()->flush();
+
 	const auto& shader = EngiApp->assets().lock()->get<GLShader>("model");
 
 	const auto& player_view = EngiApp->getEntityRegistry().view<ModelComponent, Transform>();
 
-	for (auto&& ent : player_view)
+	for (auto&& [ent, mod, tran] : player_view.each())
 	{
-		auto&& mod = EngiApp->getEntityRegistry().get<ModelComponent>(ent);
-		auto&& tran = EngiApp->getEntityRegistry().get<Transform>(ent);
-
 		glm::mat4 model = glm::translate(glm::mat4(1.0f)/*base*/, tran.m_pos/*pos*/);
 		model *= tran.m_rotation;
 		

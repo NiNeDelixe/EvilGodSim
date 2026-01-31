@@ -8,6 +8,8 @@
 
 #include <enginecore/core/graphics/render/ModelRenderer.h>
 
+#include <enginecore/core/ecs/components/PlayerComponent.h>
+
 #include "base/world/Level.h"
 
 class WorldRenderer 

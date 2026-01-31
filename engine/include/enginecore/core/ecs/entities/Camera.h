@@ -28,7 +28,6 @@ public:
     void rotate(const glm::vec3& vec) { rotate(vec.x, vec.y, vec.z); }
 
     void lookAt(const glm::vec3& target);
-    void updateRotationFromFront();
 
     glm::mat4 getProjection() const;
     glm::mat4 getView(const bool& position = true) const;

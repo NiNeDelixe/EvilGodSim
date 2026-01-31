@@ -27,13 +27,13 @@
 #include "enginecore/utils/TypeUtils.h"
 
 #define DECLARE_UNIFORMS(T, suffix) \
-    void uniform(const std::string& name, const T& v1) \
+    void uniform(const std::string_view& name, const T& v1) \
         { glUniform1##suffix(getUniformLocation(name), v1); } \
-    void uniform(const std::string& name, const T& v1, const T& v2) \
+    void uniform(const std::string_view& name, const T& v1, const T& v2) \
         { glUniform2##suffix(getUniformLocation(name), v1, v2); } \
-    void uniform(const std::string& name, const T& v1, const T& v2, const T& v3) \
+    void uniform(const std::string_view& name, const T& v1, const T& v2, const T& v3) \
         { glUniform3##suffix(getUniformLocation(name), v1, v2, v3); } \
-    void uniform(const std::string& name, const T& v1, const T& v2, const T& v3, const T& v4) \
+    void uniform(const std::string_view& name, const T& v1, const T& v2, const T& v3, const T& v4) \
         { glUniform4##suffix(getUniformLocation(name), v1, v2, v3, v4); }
 
 class GLShader : public IAsset
@@ -57,7 +57,7 @@ public:
 	~GLShader();
 
 protected:
-	GLint getUniformLocation(const std::string& name);
+	GLint getUniformLocation(const std::string_view& name);
 
 	using glshader = std::unique_ptr<GLuint, shader_deleter>;
 
@@ -73,14 +73,14 @@ public:
 	DECLARE_UNIFORMS(int, i)
 	DECLARE_UNIFORMS(unsigned int, ui)
 
-	void uniform(const std::string& name, const glm::vec2& value) { uniform(name, value.x, value.y); }
-	void uniform(const std::string& name, const glm::ivec2& value) { uniform(name, value.x, value.y); }
-	void uniform(const std::string& name, const glm::vec3& value) { uniform(name, value.x, value.y, value.z); }
-	void uniform(const std::string& name, const glm::vec4& value) { uniform(name, value.r, value.g, value.b, value.a); }
-	void uniform(const std::string& name, const glm::mat4& matrix) {
+	void uniform(const std::string_view& name, const glm::vec2& value) { uniform(name, value.x, value.y); }
+	void uniform(const std::string_view& name, const glm::ivec2& value) { uniform(name, value.x, value.y); }
+	void uniform(const std::string_view& name, const glm::vec3& value) { uniform(name, value.x, value.y, value.z); }
+	void uniform(const std::string_view& name, const glm::vec4& value) { uniform(name, value.r, value.g, value.b, value.a); }
+	void uniform(const std::string_view& name, const glm::mat4& matrix) {
 		glUniformMatrix4fv(getUniformLocation(name), 1, GL_FALSE, glm::value_ptr(matrix));
 	}
-	void uniform(const std::string& name, const glm::mat3& matrix) {
+	void uniform(const std::string_view& name, const glm::mat3& matrix) {
 		glUniformMatrix3fv(getUniformLocation(name), 1, GL_FALSE, glm::value_ptr(matrix));
 	}
 
@@ -98,7 +98,7 @@ public:
 
 protected:
 	GLuint m_id;
-	std::unordered_map<std::string, uint_t> m_uniform_locations;
+	std::unordered_map<std::string_view, uint_t> m_uniform_locations;
 
 	static std::shared_ptr<GLSLCompiler> m_compiler;
 };
