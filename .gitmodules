@@ -1,0 +1,6 @@
+[submodule "engine/libraries/rectpack2D"]
+	path = engine/libraries/rectpack2D
+	url = https://github.com/TeamHypersomnia/rectpack2D
+[submodule "engine/libraries/fpm"]
+	path = engine/libraries/fpm
+	url = https://github.com/MikeLankamp/fpm.git
