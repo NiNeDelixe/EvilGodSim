@@ -26,11 +26,11 @@ public:
 		std::shared_ptr<configs::AssetConfig> config;
 	};
 
-private:
+public:
 	AssetsLoader();
 
 public:
-	~AssetsLoader() = default;
+	virtual ~AssetsLoader() = default;
 
 public:
 	static const std::shared_ptr<AssetsLoader> instance() { return m_instance; }
@@ -67,19 +67,21 @@ public:
 	}
 	
 
-private:
-	template <class _Ty, class... _Types>
-		requires requires(_Ty* _Location, _Types&&... _Args) {
-		::new (static_cast<void*>(_Location)) _Ty(_STD forward<_Types>(_Args)...); // per LWG-3888
-	}
-	friend constexpr _Ty* std::construct_at(_Ty* const _Location, _Types&&... _Args) noexcept(noexcept(::new (static_cast<void*>(_Location)) _Ty(_STD forward<_Types>(_Args)...)));
-	template <class _Ty, class... _Types>
-	friend _CONSTEXPR20 void std::_Construct_in_place(_Ty& _Obj, _Types&&... _Args);
+protected:
+	// template <class _Ty, class... _Types>
+	// 	requires requires(_Ty* _Location, _Types&&... _Args) {
+	// 	::new (static_cast<void*>(_Location)) _Ty(_STD forward<_Types>(_Args)...); // per LWG-3888
+	// }
+	// friend constexpr _Ty* std::construct_at(_Ty* const _Location, _Types&&... _Args) noexcept(noexcept(::new (static_cast<void*>(_Location)) _Ty(_STD forward<_Types>(_Args)...)));
+	// template <class _Ty, class... _Types>
+	// friend _CONSTEXPR20 void std::_Construct_in_place(_Ty& _Obj, _Types&&... _Args);
 
-private:
+
+protected:
 	std::map<AssetType, std::shared_ptr<IAssetLoader>> m_loaders;
 	std::queue<loaderentry> m_entries;
 	std::set<std::pair<AssetType, std::string>> m_enqueued;
+
 
 	static inline std::shared_ptr<AssetsLoader> m_instance = std::make_shared<AssetsLoader>();
 };

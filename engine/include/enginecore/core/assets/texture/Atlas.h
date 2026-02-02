@@ -2,7 +2,7 @@
 #ifndef TEXTURE_ATLAS_H_
 #define TEXTURE_ATLAS_H_
 
-#include <finders_interface.h>
+#include <rectpack2D/finders_interface.h>
 
 #include "enginecore/core/assets/texture/Texture.h"
 

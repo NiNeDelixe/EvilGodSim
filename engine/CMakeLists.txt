@@ -33,8 +33,8 @@ set(ENGINE_Project_BUG_TRACKER_URL "${ENGINE_Project_Git}/issues")
 
 add_subdirectory("buildconfig")
 add_subdirectory("resources")
-add_subdirectory("libraries/glslcompiler" EXCLUDE_FROM_ALL)
-add_subdirectory("libraries/rectpack2D" EXCLUDE_FROM_ALL)
+add_subdirectory("${PROJECT_SOURCE_DIR}/libraries/glslcompiler")
+add_subdirectory("${PROJECT_SOURCE_DIR}/libraries/rectpack2D")
 
 
 file(GLOB_RECURSE SOURCES CONFIGURE_DEPENDS "${PROJECT_SOURCE_DIR}/src/*.cpp")
@@ -45,8 +45,8 @@ add_library (${PROJECT_NAME} STATIC ${SOURCES} ${HEADERS})
 add_library (Engine::Core ALIAS ${PROJECT_NAME})
 
 include_directories("${PROJECT_SOURCE_DIR}/include" 
-	"libraries/rectpack2D/src"
-	"libraries/fpm/include"
+	"${PROJECT_SOURCE_DIR}/libraries/rectpack2D/src"
+	"${PROJECT_SOURCE_DIR}/libraries/fpm/include"
 )
 
 find_package(OpenGL REQUIRED)
@@ -60,16 +60,17 @@ find_package(EnTT CONFIG REQUIRED)
 find_package(Stb REQUIRED)
 find_package(assimp CONFIG REQUIRED)
 find_package(fixed_math REQUIRED)
+find_package(eventpp CONFIG REQUIRED)
 
 find_path(BSHOSHANY_THREAD_POOL_INCLUDE_DIRS "BS_thread_pool.hpp")
-find_path(EREIGNIS_INCLUDE_DIRS "ereignis/event.hpp")
+#find_path(EREIGNIS_INCLUDE_DIRS "ereignis/event.hpp")
 
 target_include_directories(${PROJECT_NAME} PRIVATE
 	"libraries/rectpack2D/src"
 	"libraries/fpm/include"
 	${BSHOSHANY_THREAD_POOL_INCLUDE_DIRS}
 	${Stb_INCLUDE_DIR}
-	${EREIGNIS_INCLUDE_DIRS}
+	#${EREIGNIS_INCLUDE_DIRS}
 )
 
 target_include_directories(${PROJECT_NAME} PUBLIC "${PROJECT_SOURCE_DIR}/include")
@@ -94,6 +95,8 @@ target_link_libraries(${PROJECT_NAME}
 		EnTT::EnTT
 		assimp::assimp
 		fixed_math::fixed_math
+		rectpack2D::rectpack2D
+		eventpp::eventpp
 )
 
 if(${ENGINE_USE_WINDOWS_HEADER})

@@ -17,7 +17,7 @@ protected:
 public:
 	virtual ~IAsset() = default;
 
-	virtual const std::string& toString() const { return getType(); }
+	virtual std::string toString() const { return getType(); }
 	const std::string getType() const { return typeid(*this).name(); }
 	virtual const bool& isLoaded() const { return m_is_loaded; }
 

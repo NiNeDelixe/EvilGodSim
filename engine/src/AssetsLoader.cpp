@@ -2,7 +2,7 @@
 
 AssetsLoader::AssetsLoader()
 {
-
+	//m_instance = this;
 }
 
 void AssetsLoader::addResource(const AssetType& tag, const std::string& filename, const std::string& alias, const std::shared_ptr<configs::AssetConfig>& settings)
