@@ -8,7 +8,7 @@
 
 #include "enginecore/utils/math/UVRegion.h"
 
-class Atlas : IAsset
+class Atlas : public IAsset
 {
 public:
 	using spaces_type = rectpack2D::empty_spaces<false, rectpack2D::default_empty_spaces>;
