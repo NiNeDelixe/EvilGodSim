@@ -9,6 +9,7 @@
 
 #include <glog/logging.h>
 #include <glm/ext.hpp>
+#include <cpptrace/from_current.hpp>
 
 #include "enginecore/core/LibrariesDefines.h"
 
@@ -39,6 +40,7 @@
 #include "enginecore/interfaces/IEntity.h"
 
 #include "enginecore/core/ecs/systems/FreeFlySystem.h"
+#include "enginecore/core/ecs/systems/SystemsManager.h"
 #include "enginecore/core/ecs/entities/Camera.h"
 
 #include "enginecore/utils/ImguiIncludes.h"
@@ -95,15 +97,13 @@ public:
 
 public:
 	EntityRegistry<DefaultEntityIndentifier>& getEntityRegistry() { return this->m_registry; }
-	void setEntitySystem(const SystemTypes& type, const std::shared_ptr<ISystem>& system) { m_systems[type] = system; }
+	void setEntitySystem(const SystemCategory& type, const std::shared_ptr<ISystem>& system) { m_systems[type] = system; }
 	const EngineSettings::Ptr& getGlobalSettings() const { return this->m_global_settings; }
 
 public:
 	void setScreen(const std::shared_ptr<Screen>& screen) { this->m_current_screen = screen; }
 
 protected:
-	ThreadPool m_thread_pool;
-
 	bool m_in_exec = false;
 	int m_return_code = 0;
 
@@ -117,10 +117,10 @@ protected:
 	std::vector<std::shared_ptr<Ui>> m_uis{};
 	std::shared_ptr<EnginePaths> m_paths = nullptr;
 	std::shared_ptr<DrawContext> m_ctx = nullptr;
-	// std::shared_ptr<FPSCounter> m_fps_counter = nullptr;
 
 	EntityRegistry<DefaultEntityIndentifier> m_registry;
-	std::unordered_map<SystemTypes, std::shared_ptr<ISystem>> m_systems = {};
+	std::unordered_map<SystemCategory, std::shared_ptr<ISystem>> m_systems = {};
+	std::shared_ptr<SystemsManager> m_systems_manager;
 
 	EngineSettings::Ptr m_global_settings;
 

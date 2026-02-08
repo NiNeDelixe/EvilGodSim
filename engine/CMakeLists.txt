@@ -61,16 +61,13 @@ find_package(Stb REQUIRED)
 find_package(assimp CONFIG REQUIRED)
 find_package(fixed_math REQUIRED)
 find_package(eventpp CONFIG REQUIRED)
-
-find_path(BSHOSHANY_THREAD_POOL_INCLUDE_DIRS "BS_thread_pool.hpp")
-#find_path(EREIGNIS_INCLUDE_DIRS "ereignis/event.hpp")
+find_package(TBB CONFIG REQUIRED)
+find_package(cpptrace CONFIG REQUIRED)
 
 target_include_directories(${PROJECT_NAME} PRIVATE
 	"libraries/rectpack2D/src"
 	"libraries/fpm/include"
-	${BSHOSHANY_THREAD_POOL_INCLUDE_DIRS}
 	${Stb_INCLUDE_DIR}
-	#${EREIGNIS_INCLUDE_DIRS}
 )
 
 target_include_directories(${PROJECT_NAME} PUBLIC "${PROJECT_SOURCE_DIR}/include")
@@ -84,10 +81,7 @@ target_link_libraries(${PROJECT_NAME}
 		glfw
 		GLEW::glew
 		toml11::toml11
-		opencv_core
-		opencv_imgproc
-		opencv_imgcodecs
-		opencv_highgui
+		opencv_core opencv_imgproc opencv_imgcodecs opencv_highgui
 		glog::glog
 		glsl::compiler
 		EmbeddedResourcesEngine
@@ -97,6 +91,8 @@ target_link_libraries(${PROJECT_NAME}
 		fixed_math::fixed_math
 		rectpack2D::rectpack2D
 		eventpp::eventpp
+		TBB::tbb TBB::tbbmalloc TBB::tbbmalloc_proxy
+		cpptrace::cpptrace
 )
 
 if(${ENGINE_USE_WINDOWS_HEADER})

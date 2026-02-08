@@ -74,7 +74,7 @@ public:
 public:
     virtual void draw(const GLenum& primitive, const size_t& ibo_index = 0) const = 0;
     virtual void reload(const float* const vertex_buffer, const size_t& vertices,
-        const size_t* const index_buffer, const size_t& indices) = 0;
+        const uint32_t* const index_buffer, const size_t& indices) = 0;
 
 protected:
     static constexpr size_t calc_size(const ENGINE_NAMESPACE::UTILS_NAMESPACE::gl::VertexAttribute* const attrs)

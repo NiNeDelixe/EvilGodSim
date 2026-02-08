@@ -2,9 +2,12 @@
 #ifndef TYPES_THREADPOOLDEFINES_H_
 #define TYPES_THREADPOOLDEFINES_H_
 
-#include <BS_thread_pool.hpp>
+#include <tbb/parallel_for.h>
+#include <tbb/task_arena.h>
+#include <tbb/task_scheduler_observer.h>
+//#include <tbb/task_scheduler_init.h>
 
-using ThreadPool = BS::thread_pool<BS::tp::none>;
-#define ENGINE_THREADPOOL_NAMESPACE BS
+//using ThreadPool = ;
+#define ENGINE_THREADPOOL_NAMESPACE tbb
 
 #endif // !TYPES_THREADPOOLDEFINES_H_

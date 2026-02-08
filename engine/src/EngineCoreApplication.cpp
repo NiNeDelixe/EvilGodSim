@@ -23,7 +23,7 @@ EngineCoreApplication::EngineCoreApplication(int& argc, char** argv)
 
 	google::InitGoogleLogging(argv[0]);
 
-	auto a = std::make_shared<DisplaySettings>(); //TEMP: in future its moved to global options and weak_ptr in BaseWindow doesnt expired
+	auto a = std::make_shared<DisplaySettings>(); //TODO: in future its moved to global options and weak_ptr in BaseWindow doesnt expired
 	this->m_window = std::make_shared<BaseWindow>(m_global_settings->display(), argv[0]);
 
 	this->m_paths = std::make_shared<EnginePaths>();
@@ -85,14 +85,17 @@ int EngineCoreApplication::exec() noexcept(false)
 {
 	this->m_in_exec = true;
 
-	this->poll();
-	try
+	CPPTRACE_TRY
 	{
+		this->poll();
 	}
-	catch (const std::exception& exc)
+	CPPTRACE_CATCH (const std::exception& exc)
 	{
-		LOG(ERROR) << "Exception in main loop cough: " << exc.what();
-		throw exc;
+		LOG(ERROR) << "Exception in main loop cough: " << exc.what() << std::endl << 
+			cpptrace::from_current_exception().to_string();
+		this->m_in_exec = false;
+		this->m_return_code = -1;
+		//throw exc;
 	}
 	
 
@@ -111,11 +114,6 @@ void EngineCoreApplication::poll()
 	while (!this->m_window->shouldClose())
 	{
 		Time::update(m_window->time()); //Update time
-
-		for (auto&& ui : m_uis)
-		{
-			ui->update();
-		}
 
 		this->prefix(); //Virtual prefix method
 
@@ -137,15 +135,16 @@ void EngineCoreApplication::poll()
 
 void EngineCoreApplication::loadAssets()
 {
-	try
+	CPPTRACE_TRY
 	{
 		std::shared_ptr<AssetsCoreLoader> core_asset_loader = std::make_shared<AssetsCoreLoader>(this->m_assets_manager);
 		core_asset_loader->load();
 	}
-	catch (const std::exception& exc)
+	CPPTRACE_CATCH (const std::exception& exc)
 	{
-		LOG(ERROR) << "Failed to load core assets, cause:\n\t" << exc.what();
-		throw exc;
+		LOG(ERROR) << "Failed to load core assets, cause:\n\t" << exc.what() << std::endl << 
+			cpptrace::from_current_exception().to_string();
+		cpptrace::rethrow();
 	}
 	
 
@@ -161,7 +160,9 @@ void EngineCoreApplication::loadAssets()
 
 void EngineCoreApplication::loadSystems()
 {
-	m_systems[SystemTypes::CAMERA_BEHAVIOR] = std::make_shared<FreeFlySystem>();
+	m_systems_manager = std::make_shared<SystemsManager>();
+
+	m_systems[SystemCategory::CAMERA_BEHAVIOR] = std::make_shared<FreeFlySystem>();
 	//m_systems[SystemTypes::OBJECT_CONTROLLING] = std::make_shared<FreeFlySystem>();
 	//m_systems[SystemTypes::CAMERA_BEHAVIOR] = m_systems[SystemTypes::OBJECT_CONTROLLING];
 
@@ -172,10 +173,16 @@ void EngineCoreApplication::loadSystems()
 
 void EngineCoreApplication::update()
 {
+	for (auto&& ui : m_uis)
+	{
+		ui->update();
+	}
 	for (const auto& system : this->m_systems)
 	{
-		system.second->update(this->m_registry);
+		m_systems_manager->addSystem(system.first, system.second);
+		//system.second->update(this->m_registry);
 	}
+	m_systems_manager->scheduledSystem(this->m_registry);
 }
 
 void EngineCoreApplication::prefix()

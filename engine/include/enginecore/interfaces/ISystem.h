@@ -4,14 +4,6 @@
 
 #include "enginecore/utils/types/EntityDefines.h"
 
-enum SystemTypes
-{
-	OBJECT_CONTROLLING,
-	CAMERA_BEHAVIOR,
-	PHYSICS,
-	AI
-};
-
 class ISystem
 {
 public:

@@ -3,7 +3,7 @@
   "version": "0.1",
   "dependencies": [
     "assimp",
-    "bshoshany-thread-pool",
+    "tbb",
     "entt",
     "eventpp",
     "glew",
@@ -27,7 +27,8 @@
     "opengl",
     "stb",
     "toml11",
-    "fixed-math"
+    "fixed-math",
+    "cpptrace"
   ],
   "overrides": [
     {

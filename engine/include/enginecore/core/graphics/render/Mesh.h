@@ -112,7 +112,7 @@ public:
     }
 
 public:
-    void reload(const float* const vertex_buffer, const size_t& vertices, const size_t* const index_buffer, const size_t& indices) override
+    void reload(const float* const vertex_buffer, const size_t& vertices, const uint32_t* const index_buffer, const size_t& indices) override
     {
         m_vertices_count = vertices;
         m_indices = indices;
