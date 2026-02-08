@@ -8,7 +8,7 @@
 
 #include "enginecore/core/assets/AssetsLoader.h"
 
-template<AssetType tag, /*CONCEPTS_NAMESPACE::IsDerivedFromIAssetLoader*/class LOADER>
+template<AssetType tag, class LOADER>
 class AutoRegisterLoader 
 {
 protected:

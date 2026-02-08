@@ -43,6 +43,11 @@ public:
                         {
                             sys_loc->update(registry);
                         }
+                        else
+                        {
+                            LOG(WARNING) << "ECS System pointer expired: " << magic_enum::enum_name(system.first);
+                        }
+                        
 
                         //system.second->update(registry);
                         

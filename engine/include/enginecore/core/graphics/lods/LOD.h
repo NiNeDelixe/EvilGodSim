@@ -14,10 +14,10 @@ struct LODAtributes
 
     /// @brief Base mesh vertex attributes
     /// @brief {3} - cords vertex, {1} - light compressed value + 3 padding, {0} - end symbol
-    static constexpr UTILS_NAMESPACE::gl::VertexAttribute ATTRIBUTES[] =
+    static constexpr ENGINE_NAMESPACE::UTILS_NAMESPACE::gl::VertexAttribute ATTRIBUTES[] =
     {
-        {UTILS_NAMESPACE::gl::VertexAttribute::Type::FLOAT, false, 3},
-        {UTILS_NAMESPACE::gl::VertexAttribute::Type::FLOAT, false, 4},
+        {ENGINE_NAMESPACE::UTILS_NAMESPACE::gl::VertexAttribute::Type::FLOAT, false, 3},
+        {ENGINE_NAMESPACE::UTILS_NAMESPACE::gl::VertexAttribute::Type::FLOAT, false, 4},
         {{}, 0}
     };
 };

@@ -28,7 +28,8 @@
     "stb",
     "toml11",
     "fixed-math",
-    "cpptrace"
+    "cpptrace",
+    "magic-enum"
   ],
   "overrides": [
     {

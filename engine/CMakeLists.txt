@@ -63,6 +63,7 @@ find_package(fixed_math REQUIRED)
 find_package(eventpp CONFIG REQUIRED)
 find_package(TBB CONFIG REQUIRED)
 find_package(cpptrace CONFIG REQUIRED)
+find_package(magic_enum CONFIG REQUIRED)
 
 target_include_directories(${PROJECT_NAME} PRIVATE
 	"libraries/rectpack2D/src"
@@ -93,6 +94,7 @@ target_link_libraries(${PROJECT_NAME}
 		eventpp::eventpp
 		TBB::tbb TBB::tbbmalloc TBB::tbbmalloc_proxy
 		cpptrace::cpptrace
+		magic_enum::magic_enum
 )
 
 if(${ENGINE_USE_WINDOWS_HEADER})
