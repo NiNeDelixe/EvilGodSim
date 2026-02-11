@@ -33,9 +33,6 @@ set(ENGINE_Project_BUG_TRACKER_URL "${ENGINE_Project_Git}/issues")
 
 add_subdirectory("buildconfig")
 add_subdirectory("resources")
-add_subdirectory("${PROJECT_SOURCE_DIR}/libraries/glslcompiler")
-add_subdirectory("${PROJECT_SOURCE_DIR}/libraries/rectpack2D")
-
 
 file(GLOB_RECURSE SOURCES CONFIGURE_DEPENDS "${PROJECT_SOURCE_DIR}/src/*.cpp")
 file(GLOB_RECURSE HEADERS CONFIGURE_DEPENDS "${PROJECT_SOURCE_DIR}/include/*.h")

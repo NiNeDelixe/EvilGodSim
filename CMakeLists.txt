@@ -28,8 +28,10 @@ set(${ENTT_BUILD_DOCS} ON)
 
 ####################################### Subdirectories #######################################
 
+add_subdirectory("${PROJECT_SOURCE_DIR}/libraries/glslcompiler")
+add_subdirectory("${PROJECT_SOURCE_DIR}/libraries/rectpack2D")
+
 add_subdirectory("Engine" EXCLUDE_FROM_ALL)
-add_subdirectory("Game")
 add_subdirectory("Editor")
 
 if(BUILD_TESTS)
