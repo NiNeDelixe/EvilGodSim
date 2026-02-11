@@ -81,7 +81,6 @@ void FreeFlySystem::update(EntityRegistry<DefaultEntityIndentifier>& registry)
 		camera.rotate(glm::radians(rotation.y),
 			glm::radians(rotation.x), glm::radians(rotation.z));
 
-		transform.normalizeVectors();
 		camera.updateVectors();
 	}
 }

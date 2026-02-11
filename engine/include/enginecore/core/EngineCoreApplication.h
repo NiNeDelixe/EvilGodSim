@@ -40,6 +40,8 @@
 #include "enginecore/interfaces/IEntity.h"
 
 #include "enginecore/core/ecs/systems/FreeFlySystem.h"
+#include "enginecore/core/ecs/systems/TransformSystem.h"
+#include "enginecore/core/ecs/systems/RotationSystem.h"
 #include "enginecore/core/ecs/systems/SystemsManager.h"
 #include "enginecore/core/ecs/entities/Camera.h"
 

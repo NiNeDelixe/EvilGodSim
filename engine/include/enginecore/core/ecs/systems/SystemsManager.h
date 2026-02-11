@@ -17,14 +17,17 @@ enum class SystemCategory
     RENDER,
     PHYSICS,
     IO,
-    AI
+    AI,
+    TRANSFORM,
+    ROTATION
 };
 
 class SystemsManager
 {
 public:
     SystemsManager(int max_concurrency = std::thread::hardware_concurrency()) 
-        : m_arena(max_concurrency) {}
+        : m_arena(max_concurrency) 
+        {}
     ~SystemsManager() {}
 
 public:

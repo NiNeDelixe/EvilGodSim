@@ -25,12 +25,6 @@ public:
 public:
 	virtual void prefix() override;
 	virtual void postfix() override;
-
-public:
-	void debugButtonWindowPressed(InputType type, int key, int scancode, int action, int mods);
-
-private:
-	bool m_debug_window = false;
 };
 
 

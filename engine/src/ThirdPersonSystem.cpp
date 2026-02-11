@@ -37,8 +37,6 @@ void ThirdPersonSystem::update(EntityRegistry<DefaultEntityIndentifier>& registr
             camera_transform.m_front_modified = true;
 
             camera.updateVectors();
-            camera_transform.normalizeVectors();
-            player_transform.normalizeVectors();
         }
     }
 }

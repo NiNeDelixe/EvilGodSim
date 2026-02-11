@@ -17,12 +17,6 @@ public:
 	float m_yaw = .0f;
 	float m_pitch = .0f;
 	float m_roll = .0f;
-
-public:
-	void updateEulerAnglesFromMatrix()
-    {
-        glm::extractEulerAngleYXZ(m_rotation, m_yaw, m_pitch, m_roll);
-    }
 };
 
 

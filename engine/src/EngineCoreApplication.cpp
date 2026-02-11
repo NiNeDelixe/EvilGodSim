@@ -163,8 +163,9 @@ void EngineCoreApplication::loadSystems()
 	m_systems_manager = std::make_shared<SystemsManager>();
 
 	m_systems[SystemCategory::CAMERA_BEHAVIOR] = std::make_shared<FreeFlySystem>();
-	//m_systems[SystemTypes::OBJECT_CONTROLLING] = std::make_shared<FreeFlySystem>();
-	//m_systems[SystemTypes::CAMERA_BEHAVIOR] = m_systems[SystemTypes::OBJECT_CONTROLLING];
+
+	m_systems[SystemCategory::TRANSFORM] = std::make_shared<TransformSystem>();
+	m_systems[SystemCategory::ROTATION] = std::make_shared<RotationSystem>();
 
 	auto entity = m_registry.create();
 	m_registry.emplace<Transform>(entity);

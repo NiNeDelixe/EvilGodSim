@@ -1,18 +1,19 @@
 #pragma once
-#ifndef SYSTEMS_TRANSFORMSYSTEM_H_
-#define SYSTEMS_TRANSFORMSYSTEM_H_
+#ifndef SYSTEMS_ROTATIONSYSTEM_H_
+#define SYSTEMS_ROTATIONSYSTEM_H_
 
 #include "enginecore/core/CoreDefines.h"
 
 #include "enginecore/interfaces/ISystem.h"
 
+#include "enginecore/core/ecs/components/Rotation.h"
 #include "enginecore/core/ecs/components/Transform.h"
 
-class TransformSystem : public ISystem
+class RotationSystem : public ISystem
 {
 public:
-    TransformSystem() = default;
-    ~TransformSystem() = default;
+    RotationSystem() = default;
+    ~RotationSystem() = default;
 
 public:
     void update(EntityRegistry<DefaultEntityIndentifier>& registry) override;
@@ -21,4 +22,4 @@ private:
     
 };
 
-#endif  // SYSTEMS_TRANSFORMSYSTEM_H_
+#endif  // SYSTEMS_ROTATIONSYSTEM_H_

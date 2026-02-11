@@ -13,7 +13,7 @@ WorldRenderer::WorldRenderer(const std::weak_ptr<Level>& world)
 	EngiApp->getEntityRegistry().emplace<Transform>(entity);
 	EngiApp->getEntityRegistry().emplace<PlayerComponent>(entity);
 
-	for (size_t i = 0; i < 10000; i++)
+	for (size_t i = 0; i < 10; i++)
 	{
 		auto&& entity2 = EngiApp->getEntityRegistry().create();
 		auto&& model2 = EngiApp->assets().lock()->get<Model>("spider");

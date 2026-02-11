@@ -32,7 +32,6 @@ void PlayerControllSystem::update(EntityRegistry<DefaultEntityIndentifier> &regi
             player_transform.m_rotation = glm::inverse(glm::lookAt(glm::vec3(0.0f), move_direction, player_transform.m_up)) * m_move_speed;
             
             player_transform.m_pos += movement * Time::deltaTime();
-            player_transform.normalizeVectors();
         }
     }
 }

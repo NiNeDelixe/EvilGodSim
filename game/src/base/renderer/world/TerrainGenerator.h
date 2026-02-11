@@ -37,7 +37,7 @@ public:
     ~TerrainGenerator() = default;
 
     void generateChunk(std::shared_ptr<Chunk>& chunk, const int& chunk_x, const int& chunk_z);
-    void setSeed(const int& seed) { m_seed = seed; m_noise.SetSeed(m_seed); }
+    void setSeed(const uint64_t& seed) { m_seed = seed; m_noise.SetSeed(m_seed); }
 
 
 public:
