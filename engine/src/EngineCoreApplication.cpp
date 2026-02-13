@@ -184,6 +184,12 @@ void EngineCoreApplication::update()
 		//system.second->update(this->m_registry);
 	}
 	m_systems_manager->scheduledSystem(this->m_registry);
+
+	for (const auto& system : this->m_free_systems)
+	{
+		system->update(this->m_registry);
+		//system.second->update(this->m_registry);
+	}
 }
 
 void EngineCoreApplication::prefix()

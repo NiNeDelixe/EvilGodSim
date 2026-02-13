@@ -6,7 +6,7 @@
 
 #include "enginecore/interfaces/ISystem.h"
 
-#include "enginecore/core/ecs/components/Transform.h"
+#include "enginecore/core/ecs/components/transform/Transform.h"
 
 class TransformSystem : public ISystem
 {

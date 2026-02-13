@@ -10,6 +10,8 @@
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
 
+#include <glog/logging.h>
+
 #include "enginecore/interfaces/IAssetLoader.h"
 
 #include "enginecore/core/assets/loaders/AutoRegisterLoader.h"

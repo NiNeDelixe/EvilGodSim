@@ -1,3 +1,5 @@
+#ifndef TRANSFORM_ROTATION_H_
+#define TRANSFORM_ROTATION_H_
 #pragma once
 #ifndef COMPONENTS_ROTATION_H_
 #define COMPONENTS_ROTATION_H_
@@ -21,3 +23,6 @@ public:
 
 
 #endif // !COMPONENTS_ROTATION_H_
+
+
+#endif  // TRANSFORM_ROTATION_H_

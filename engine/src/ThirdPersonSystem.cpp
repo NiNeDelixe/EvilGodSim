@@ -20,21 +20,33 @@ void ThirdPersonSystem::update(EntityRegistry<DefaultEntityIndentifier>& registr
 
         for (auto&& [camera_entity, camera, camera_transform] : camera_view.each())
         {
+            // camera_transform.m_rotation = glm::translate(camera_transform.m_rotation, {0.f, m_camera_distance, m_camera_distance}) *
+            //     glm::rotate(camera_transform.m_pitch, camera_transform.m_yaw, 0.f) *
+            //     glm::translate(player_transform.m_pos.x, player_transform.m_pos.y, player_transform.m_pos.z);
+
+            // glm::vec3 offset(0, 3, 20);
+            // glm::vec3 cp = glm::rotate(glm::vec3(0.f, 0.f, m_camera_distance), camera_transform.m_yaw, glm::vec3(0, 1, 0));
+
+            // camera_transform.m_pos = player_transform.m_pos + cp + offset;
+            
+            
             glm::vec3 desired_camera_pos = player_transform.m_pos;
             desired_camera_pos -= player_transform.m_front * m_camera_distance;
             desired_camera_pos.y += m_camera_height;
-
-            camera_transform.m_pos = glm::mix(camera_transform.m_pos, desired_camera_pos, m_smooth_factor);
-
-            glm::vec3 look_direction = glm::normalize(player_transform.m_pos - camera_transform.m_pos);
             
-            camera_transform.m_front = glm::mix(
-                camera_transform.m_front, 
-                look_direction, 
-                m_smooth_factor
-            );
+            camera_transform.m_pos = glm::mix(camera_transform.m_pos, desired_camera_pos, m_smooth_factor);
+            
+            camera.lookAt(player_transform.m_pos);
 
-            camera_transform.m_front_modified = true;
+            // glm::vec3 look_direction = glm::normalize(player_transform.m_pos - camera_transform.m_pos);
+            
+            // camera_transform.m_front = glm::mix(
+            //     camera_transform.m_front, 
+            //     look_direction, 
+            //     m_smooth_factor
+            // );
+
+            // camera_transform.m_front_modified = true;
 
             camera.updateVectors();
         }

@@ -18,13 +18,15 @@ void ModelsLoader::operator()(const std::filesystem::path& file_or_directory, co
 
     if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
     {
-        //TODO: make logging when failed to import model
+        LOG(ERROR) << "failed to import model cause:" << "Scene invalid";
+        return;
     }
 
     auto model = processScene(scene);
     if (!model)
     {
-        //TODO: make logging when failed to import model
+        LOG(ERROR) << "failed to import model cause:" << "Model invalid";
+        return;
     }
 
     model->setPath(file_or_directory);

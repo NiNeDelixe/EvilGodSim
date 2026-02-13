@@ -15,7 +15,7 @@
 
 #include "enginecore/interfaces/IEntity.h"
 
-#include "enginecore/core/ecs/components/Transform.h"
+#include "enginecore/core/ecs/components/transform/Transform.h"
 
 class Camera : public IEntity
 {
@@ -28,6 +28,7 @@ public:
     void rotate(const glm::vec3& vec) { rotate(vec.x, vec.y, vec.z); }
 
     void lookAt(const glm::vec3& target);
+    void lookAt(const glm::vec3& target, const float& interpolation);
 
     glm::mat4 getProjection() const;
     glm::mat4 getView(const bool& position = true) const;

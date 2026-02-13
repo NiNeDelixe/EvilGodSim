@@ -5,14 +5,8 @@ void ModelRenderer::render()
 	auto ldrc = EngiApp->ctx().lock()->sub();
 
 	ldrc.setBlendMode(BlendMode::normal);
-	//ldrc.setBlendMode(BlendMode::addition);
-	//ldrc.setBlendMode(BlendMode::inversion);
 	ldrc.setDepthTest(true);
 	ldrc.setCullFace(true);
-
-	ldrc.getBatch2D()->begin();
-	ldrc.getBatch2D()->rect(1, 1, 2, 3);
-	ldrc.getBatch2D()->flush();
 
 	const auto& shader = EngiApp->assets().lock()->get<GLShader>("model");
 

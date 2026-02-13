@@ -39,7 +39,7 @@ void BaseWindow::WindowEvents::update()
             {
                 binding.m_state = true;
                 binding.m_just_change = true;
-                //binding.onactived.notify(); //TODO:
+                binding.m_on_actived();
             }
         }
         else

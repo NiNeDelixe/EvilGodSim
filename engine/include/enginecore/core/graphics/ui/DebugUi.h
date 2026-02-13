@@ -15,7 +15,7 @@
 
 #include "enginecore/core/graphics/render/Mesh.h"
 #include "enginecore/core/ecs/entities/Camera.h"
-#include "enginecore/core/ecs/components/Transform.h"
+#include "enginecore/core/ecs/components/transform/Transform.h"
 #include "enginecore/core/window/Input.h"
 
 #include "enginecore/core/graphics/ui/Ui.h"

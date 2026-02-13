@@ -100,6 +100,7 @@ public:
 public:
 	EntityRegistry<DefaultEntityIndentifier>& getEntityRegistry() { return this->m_registry; }
 	void setEntitySystem(const SystemCategory& type, const std::shared_ptr<ISystem>& system) { m_systems[type] = system; }
+	void addEntitySystem(const std::shared_ptr<ISystem>& system) { m_free_systems.push_back(system); }
 	const EngineSettings::Ptr& getGlobalSettings() const { return this->m_global_settings; }
 
 public:
@@ -122,6 +123,7 @@ protected:
 
 	EntityRegistry<DefaultEntityIndentifier> m_registry;
 	std::unordered_map<SystemCategory, std::shared_ptr<ISystem>> m_systems = {};
+	std::vector<std::shared_ptr<ISystem>> m_free_systems = {};
 	std::shared_ptr<SystemsManager> m_systems_manager;
 
 	EngineSettings::Ptr m_global_settings;

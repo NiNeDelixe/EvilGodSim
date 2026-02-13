@@ -22,16 +22,16 @@ endif()
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
-message(STATUS "cmake toolchin file: ${CMAKE_TOOLCHAIN_FILE}")
+message(STATUS "cmake toolchain file: ${CMAKE_TOOLCHAIN_FILE}")
 
-set(${ENTT_BUILD_DOCS} ON)
+set(${ENTT_BUILD_DOCS} OFF)
 
 ####################################### Subdirectories #######################################
 
 add_subdirectory("${PROJECT_SOURCE_DIR}/libraries/glslcompiler")
 add_subdirectory("${PROJECT_SOURCE_DIR}/libraries/rectpack2D")
 
-add_subdirectory("Engine" EXCLUDE_FROM_ALL)
+add_subdirectory("Engine")
 add_subdirectory("Editor")
 
 if(BUILD_TESTS)

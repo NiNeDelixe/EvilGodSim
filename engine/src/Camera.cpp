@@ -6,6 +6,7 @@ Camera::Camera(const glm::vec3& position, const float& fov, const entt::entity& 
     : m_fov(fov), m_transform(EngiApp->getEntityRegistry().get<Transform>(entity))
 {
     m_transform.m_pos = position;
+    m_transform.m_rotation = glm::mat4(0.f);
     updateVectors();
 }
 
@@ -48,8 +49,27 @@ void Camera::rotate(const float& x, const float& y, const float& z)
 
 void Camera::lookAt(const glm::vec3 &target)
 {
-    glm::vec3 direction = glm::normalize(target - m_transform.m_pos);
-    m_transform.m_front = direction;
+    auto matrix = glm::inverse(
+        glm::lookAt(glm::vec3(), target - m_transform.m_pos, glm::vec3(0, 1, 0))
+    );
+
+    m_transform.m_rotation = matrix;
+    updateVectors();
+}
+
+void Camera::lookAt(const glm::vec3 &target, const float &interpolation)
+{
+    auto matrix = glm::inverse(
+        glm::lookAt(glm::vec3(), target - m_transform.m_pos, glm::vec3(0, 1, 0))
+    );
+
+    matrix = glm::mat4_cast(glm::slerp(
+            glm::quat(m_transform.m_rotation),
+            glm::quat(matrix),
+            interpolation));
+
+    m_transform.m_rotation = matrix;
+    updateVectors();
 }
 
 glm::mat4 Camera::getProjection() const

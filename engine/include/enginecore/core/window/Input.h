@@ -4,6 +4,7 @@
 #include <string>
 
 #include <GLFW/glfw3.h>
+#include <eventpp/callbacklist.h>
 
 #include "enginecore/core/CoreDefines.h"
 
@@ -156,7 +157,7 @@ enum class InputType
 
 struct Binding 
 {
-    //util::HandlersList<> m_on_actived;
+    eventpp::CallbackList<void()> m_on_actived;
 
     InputType m_type;
     int m_code;
