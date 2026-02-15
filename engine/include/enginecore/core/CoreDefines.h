@@ -58,6 +58,9 @@ constexpr auto ENGINE_LOGS_DIRECTORY = "logs";
 #define SSETTER(type, field, Name) void Name(const type& value) { this->field = value; }  
 #define SGETTER(type, field, Name) const type& Name() const { return this->field; }  
 
+#define GETTER_VAL(type, field, Name) const type& Name() const { return this->field; }  
+#define SH_GETTER_VAL(type, field, Name) type Name() const { return this->field; }  
+
 using fixedpoint_t = float;
 
 namespace glm
