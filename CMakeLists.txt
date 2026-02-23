@@ -9,7 +9,7 @@ endif()
 
 project("EvilGodSim")
 
-option(BUILD_TESTS "Build tests" OFF)
+option(ENGINE_BUILD_TESTS "Build tests" ON)
 
 
 message(STATUS "Build type: ${CMAKE_BUILD_TYPE}")
@@ -24,17 +24,17 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 message(STATUS "cmake toolchain file: ${CMAKE_TOOLCHAIN_FILE}")
 
-set(${ENTT_BUILD_DOCS} OFF)
+set(ENTT_BUILD_DOCS OFF)
 
 ####################################### Subdirectories #######################################
 
 add_subdirectory("${PROJECT_SOURCE_DIR}/libraries/glslcompiler")
 add_subdirectory("${PROJECT_SOURCE_DIR}/libraries/rectpack2D")
 
-add_subdirectory("Engine")
-add_subdirectory("Editor")
+add_subdirectory("engine")
+add_subdirectory("editor")
 
-if(BUILD_TESTS)
+if(ENGINE_BUILD_TESTS)
     message(STATUS "Building tests")
     enable_testing()
     add_subdirectory("tests")

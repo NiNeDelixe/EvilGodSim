@@ -23,7 +23,7 @@ void ModelRenderer::render()
 
 		shader->uniform("u_model", model);
 
-		mod.getModel()->draw();
+		mod.model->draw();
 	}
 
 	

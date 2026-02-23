@@ -51,7 +51,7 @@
             "class ${1:$TM_FILENAME_BASE} : public IComponent",
             "{",
             "public:",
-            "   $0",
+            "    $0",
             "};"
         ]
     },
@@ -65,7 +65,39 @@
             "class ${1:$TM_FILENAME_BASE} : public IComponent",
             "{",
             "public:",
-            "   $0",
+            "    $0",
+            "};"
+        ]
+    },
+    "Create engine class": {
+        "prefix": "classeng",
+        "body": [
+            "#include \"enginecore/core/CoreDefines.h\"",
+            "",
+            "class ${1:$TM_FILENAME_BASE}",
+            "{",
+            "public:",
+            "    ${1:$TM_FILENAME_BASE}() = default;",
+            "    ~${1:$TM_FILENAME_BASE}() = default;",
+            "",
+            "private:",
+            "    $0",
+            "};"
+        ]
+    },
+    "Create game class": {
+        "prefix": "classgme",
+        "body": [
+            "#include <enginecore/core/CoreDefines.h>",
+            "",
+            "class ${1:$TM_FILENAME_BASE}",
+            "{",
+            "public:",
+            "    ${1:$TM_FILENAME_BASE}() = default;",
+            "    ~${1:$TM_FILENAME_BASE}() = default;",
+            "",
+            "private:",
+            "    $0",
             "};"
         ]
     }

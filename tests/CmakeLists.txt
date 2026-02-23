@@ -28,3 +28,7 @@ FILE(COPY ${RESOURCES} DESTINATION "${CMAKE_BINARY_DIR}/tests")
 
 include(GoogleTest)
 gtest_discover_tests(${PROJECT_NAME})
+
+add_test(
+    NAME ${PROJECT_NAME}
+    COMMAND $<TARGET_FILE:${PROJECT_NAME}>)

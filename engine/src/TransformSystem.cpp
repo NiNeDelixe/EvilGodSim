@@ -1,5 +1,10 @@
 #include "enginecore/core/ecs/systems/TransformSystem.h"
 
+TransformSystem::TransformSystem()
+    : ISystem(SystemCategory::TRANSFORM)
+{
+}
+
 void TransformSystem::update(EntityRegistry<DefaultEntityIndentifier> &registry)
 {
     const auto& transform_view = registry.view<Transform>();

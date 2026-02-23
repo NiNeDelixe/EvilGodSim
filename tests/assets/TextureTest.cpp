@@ -140,15 +140,15 @@ TEST(GLTexture, BaseTest)
 	std::filesystem::path texture_path = "texture_test.png";
 
 	cv::Mat image = cv::imread(texture_path.string(), cv::ImreadModes::IMREAD_UNCHANGED);
-	GLuint f = 1;
-	//std::shared_ptr<Texture> gl_texture = Texture::createFromFile<GLTexture>(texture_path, f, image.size().height, image.size().width);
 
-	/*for (size_t i = 0; i < image.size().height; i++)
+	std::shared_ptr<Texture> gl_texture = Texture::createFromFile<GLTexture>(texture_path);
+
+	for (size_t i = 0; i < image.size().height; i++)
 	{
 		for (size_t j = 0; j < image.size().width; j++)
 		{
 			EXPECT_EQ(gl_texture->getBytesArray()[i * image.size().width + j], image.data[i * image.size().width + j]);
 		}
-	}*/
+	}
 
 }

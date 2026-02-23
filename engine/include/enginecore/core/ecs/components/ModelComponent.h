@@ -11,17 +11,18 @@
 class ModelComponent : public IComponent
 {
 public:
-	ModelComponent(const Model* const model) : m_model(model) {}
+	ModelComponent(const Model* const model) : model(model) {}
 	ModelComponent() = default;
 	~ModelComponent() = default;
 
-public:
-	const Model* const getModel() const {
-		return this->m_model;
-	};
+// public:
+// 	const Model* const getModel() const {
+// 		return this->m_model;
+// 	};
 
-private:
-	const Model* const m_model;
+// private:
+public:
+	const Model* const model;
 };
 
 

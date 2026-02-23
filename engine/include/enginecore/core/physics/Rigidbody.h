@@ -18,8 +18,8 @@ public:
     GETTER(bool, m_enabled, Enabled)
     SETTER(bool, m_enabled, Enabled)
     
-    GETTER(Hitbox, m_hitbox, Hibox)
-    SETTER(Hitbox, m_hitbox, Hibox)
+    GETTER(Hitbox, m_hitbox, Hitbox)
+    SETTER(Hitbox, m_hitbox, Hitbox)
 
     GETTER(std::vector<Sensor>, m_sensors, Sensors)
     SETTER(std::vector<Sensor>, m_sensors, Sensors)

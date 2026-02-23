@@ -1,6 +1,11 @@
 #include "enginecore/core/ecs/systems/ThirdPersonSystem.h"
 
-void ThirdPersonSystem::update(EntityRegistry<DefaultEntityIndentifier>& registry)
+ThirdPersonSystem::ThirdPersonSystem()
+    : ISystem(SystemCategory::CAMERA_BEHAVIOR)
+{
+}
+
+void ThirdPersonSystem::update(EntityRegistry<DefaultEntityIndentifier> &registry)
 {
     const auto& player_view = registry.template view<ModelComponent, Transform, PlayerComponent>();
     const auto& camera_view = registry.template view<Camera, Transform>();

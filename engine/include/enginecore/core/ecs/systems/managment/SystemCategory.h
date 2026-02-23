@@ -1,0 +1,18 @@
+#pragma once
+#ifndef MANAGMENT_SYSTEMCATEGORY_H_
+#define MANAGMENT_SYSTEMCATEGORY_H_
+
+enum class SystemCategory 
+{
+    OBJECT_CONTROLLING,
+	CAMERA_BEHAVIOR,
+    LOGIC,
+    RENDER,
+    PHYSICS,
+    IO,
+    AI,
+    TRANSFORM,
+    ROTATION
+};
+
+#endif  // MANAGMENT_SYSTEMCATEGORY_H_

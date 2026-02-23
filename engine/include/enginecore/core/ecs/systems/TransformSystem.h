@@ -11,7 +11,7 @@
 class TransformSystem : public ISystem
 {
 public:
-    TransformSystem() = default;
+    TransformSystem();
     ~TransformSystem() = default;
 
 public:

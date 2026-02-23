@@ -20,7 +20,7 @@
 class ThirdPersonSystem : public ISystem
 {
 public:
-	ThirdPersonSystem() = default;
+	ThirdPersonSystem();
 	~ThirdPersonSystem() = default;
 
 public:

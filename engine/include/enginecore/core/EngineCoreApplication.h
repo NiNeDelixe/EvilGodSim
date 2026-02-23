@@ -39,18 +39,16 @@
 #include "enginecore/interfaces/ISystem.h"
 #include "enginecore/interfaces/IEntity.h"
 
-#include "enginecore/core/ecs/systems/FreeFlySystem.h"
-#include "enginecore/core/ecs/systems/TransformSystem.h"
-#include "enginecore/core/ecs/systems/RotationSystem.h"
-#include "enginecore/core/ecs/systems/SystemsManager.h"
+#include "enginecore/core/ecs/systems/managment/SystemsManager.h"
+#include "enginecore/core/ecs/systems/managment/EngineSystemFactory.h"
 #include "enginecore/core/ecs/entities/Camera.h"
 
 #include "enginecore/utils/ImguiIncludes.h"
 // #include "enginecore/utils/FPSStats.h"
 
-#ifdef ERROR
-#undef ERROR
-#endif // ERROR
+// #ifdef ERROR
+// #undef ERROR
+// #endif // ERROR
 
 
 class EngineCoreApplication;
@@ -97,10 +95,13 @@ public:
 	GETTER(std::vector<std::shared_ptr<Ui>>, m_uis, Uis)
 	SETTER(std::vector<std::shared_ptr<Ui>>, m_uis, Uis)
 
+	GETTER(std::shared_ptr<SystemsManager>, m_systems_manager, SystemManager)
+	SETTER(std::shared_ptr<SystemsManager>, m_systems_manager, SystemManager)
+
 public:
 	EntityRegistry<DefaultEntityIndentifier>& getEntityRegistry() { return this->m_registry; }
-	void setEntitySystem(const SystemCategory& type, const std::shared_ptr<ISystem>& system) { m_systems[type] = system; }
-	void addEntitySystem(const std::shared_ptr<ISystem>& system) { m_free_systems.push_back(system); }
+	// void setEntitySystem(const SystemCategory& type, const std::shared_ptr<ISystem>& system) { m_systems[type] = system; }
+	// void addEntitySystem(const std::shared_ptr<ISystem>& system) { m_free_systems.push_back(system); }
 	const EngineSettings::Ptr& getGlobalSettings() const { return this->m_global_settings; }
 
 public:
@@ -122,8 +123,8 @@ protected:
 	std::shared_ptr<DrawContext> m_ctx = nullptr;
 
 	EntityRegistry<DefaultEntityIndentifier> m_registry;
-	std::unordered_map<SystemCategory, std::shared_ptr<ISystem>> m_systems = {};
-	std::vector<std::shared_ptr<ISystem>> m_free_systems = {};
+	// std::unordered_map<SystemCategory, std::shared_ptr<ISystem>> m_systems = {};
+	// std::vector<std::shared_ptr<ISystem>> m_free_systems = {};
 	std::shared_ptr<SystemsManager> m_systems_manager;
 
 	EngineSettings::Ptr m_global_settings;

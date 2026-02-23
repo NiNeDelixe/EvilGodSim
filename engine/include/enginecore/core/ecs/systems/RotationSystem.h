@@ -12,7 +12,7 @@
 class RotationSystem : public ISystem
 {
 public:
-    RotationSystem() = default;
+    RotationSystem();
     ~RotationSystem() = default;
 
 public:

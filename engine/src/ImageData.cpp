@@ -25,6 +25,7 @@ ImageData::ImageData(const ImageFormat& format, const uint_t& width, const uint_
 
 std::shared_ptr<ImageData> ImageData::createFromFile(const std::filesystem::path& path_to_file)
 {
+    //FIXME: check if image opened
     cv::Mat raw_image = cv::imread(path_to_file.string(), cv::ImreadModes::IMREAD_UNCHANGED);
 
     cv::Mat image;

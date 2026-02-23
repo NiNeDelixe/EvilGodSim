@@ -1,5 +1,10 @@
 #include "enginecore/core/ecs/systems/RotationSystem.h"
 
+RotationSystem::RotationSystem()
+    : ISystem(SystemCategory::ROTATION)
+{
+}
+
 void RotationSystem::update(EntityRegistry<DefaultEntityIndentifier> &registry)
 {
     const auto& rotation_view = registry.view<Transform>(); 

@@ -41,7 +41,7 @@ file(GLOB_RECURSE MODULES CONFIGURE_DEPENDS "${PROJECT_SOURCE_DIR}/include/*.ixx
 add_library (${PROJECT_NAME} STATIC ${SOURCES} ${HEADERS})
 add_library (Engine::Core ALIAS ${PROJECT_NAME})
 
-include_directories("${PROJECT_SOURCE_DIR}/include" 
+include_directories(
 	"${PROJECT_SOURCE_DIR}/libraries/rectpack2D/src"
 	"${PROJECT_SOURCE_DIR}/libraries/fpm/include"
 )

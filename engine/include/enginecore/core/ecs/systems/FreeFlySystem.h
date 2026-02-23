@@ -5,13 +5,14 @@
 #include "enginecore/interfaces/ISystem.h"
 
 #include "enginecore/core/ecs/components/transform/Transform.h"
+#include "enginecore/core/ecs/entities/Camera.h"
 
 #include "enginecore/core/window/Input.h"
 
 class FreeFlySystem : public ISystem
 {
 public:
-	FreeFlySystem() = default;
+	FreeFlySystem();
 	~FreeFlySystem() = default;
 
 	void update(EntityRegistry<DefaultEntityIndentifier>& registry) override;

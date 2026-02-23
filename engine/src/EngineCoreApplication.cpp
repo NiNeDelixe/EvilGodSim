@@ -162,10 +162,12 @@ void EngineCoreApplication::loadSystems()
 {
 	m_systems_manager = std::make_shared<SystemsManager>();
 
-	m_systems[SystemCategory::CAMERA_BEHAVIOR] = std::make_shared<FreeFlySystem>();
+	m_systems_manager->emplaceSystems<EngineSystemFactory>();
 
-	m_systems[SystemCategory::TRANSFORM] = std::make_shared<TransformSystem>();
-	m_systems[SystemCategory::ROTATION] = std::make_shared<RotationSystem>();
+	// m_systems[SystemCategory::CAMERA_BEHAVIOR] = std::make_shared<FreeFlySystem>();
+
+	// m_systems[SystemCategory::TRANSFORM] = std::make_shared<TransformSystem>();
+	// m_systems[SystemCategory::ROTATION] = std::make_shared<RotationSystem>();
 
 	auto entity = m_registry.create();
 	m_registry.emplace<Transform>(entity);
@@ -178,18 +180,18 @@ void EngineCoreApplication::update()
 	{
 		ui->update();
 	}
-	for (const auto& system : this->m_systems)
-	{
-		m_systems_manager->addSystem(system.first, system.second);
-		//system.second->update(this->m_registry);
-	}
+	// for (const auto& system : this->m_systems)
+	// {
+	// 	m_systems_manager->addSystem(system.first, system.second);
+	// 	//system.second->update(this->m_registry);
+	// }
+	
+	// for (const auto& system : this->m_free_systems)
+	// {
+	// 	system->update(this->m_registry);
+	// 	//system.second->update(this->m_registry);
+	// }
 	m_systems_manager->scheduledSystem(this->m_registry);
-
-	for (const auto& system : this->m_free_systems)
-	{
-		system->update(this->m_registry);
-		//system.second->update(this->m_registry);
-	}
 }
 
 void EngineCoreApplication::prefix()

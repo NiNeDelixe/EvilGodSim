@@ -1,8 +1,13 @@
-#include "enginecore/core/EngineCoreApplication.h"
+#include "enginecore/core/EngineCoreApplication.h" //TODO: remove
 #include "enginecore/core/ecs/systems/FreeFlySystem.h"
 
+FreeFlySystem::FreeFlySystem()
+	: ISystem(SystemCategory::CAMERA_BEHAVIOR)
+{
 
-void FreeFlySystem::update(EntityRegistry<DefaultEntityIndentifier>& registry)
+}
+
+void FreeFlySystem::update(EntityRegistry<DefaultEntityIndentifier> &registry)
 {
 	const auto& transform_view = registry.view<Camera, Transform>();
 	for (const auto& entity : transform_view)
