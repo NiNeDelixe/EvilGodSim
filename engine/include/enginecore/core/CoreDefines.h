@@ -61,7 +61,19 @@ constexpr auto ENGINE_LOGS_DIRECTORY = "logs";
 #define GETTER_VAL(type, field, Name) const type& Name() const { return this->field; }  
 #define SH_GETTER_VAL(type, field, Name) type Name() const { return this->field; }  
 
+#define GET_SET_ERS(type, field, Name) GETTER(type, field, Name) SETTER(type, field, Name)
+#define SH_GET_SET_ERS(type, field, Name) SGETTER(type, field, Name) SSETTER(type, field, Name)
+
 #define DECLARE_META_FIELD(type, field) type field; public: auto& set_##field(const type& value) { this->field = value; return *this; }
+
+#define DECLARE_FIELD_WITH_PROPERIES(...) GET_MACRO(__VA_ARGS__, OPT_DECLARE_FIELD_WITH_PROPERIES, DEF_FALSE_DECLARE_FIELD_WITH_PROPERIES)(__VA_ARGS__)
+
+#define GET_MACRO(_1,_2,_3,NAME,...) NAME
+#define DEF_FALSE_DECLARE_FIELD_WITH_PROPERIES(type, field) OPT_DECLARE_FIELD_WITH_PROPERIES(type, field, false)
+#define OPT_DECLARE_FIELD_WITH_PROPERIES(type, field, add_memeber_prefix) IMPL_DECLARE_FIELD_WITH_PROPERIES(type, field, add_memeber_prefix)
+#define IMPL_DECLARE_FIELD_WITH_PROPERIES(type, field, add_memeber_prefix) IMPL_DECLARE_FIELD_WITH_PROPERIES_##add_memeber_prefix(type, field)
+#define IMPL_DECLARE_FIELD_WITH_PROPERIES_true(type, field) type m_##field; public: GET_SET_ERS(type, m_##field, _##field)
+#define IMPL_DECLARE_FIELD_WITH_PROPERIES_false(type, field) type field; public: GET_SET_ERS(type, field, _##field)
 
 using fixedpoint_t = float;
 

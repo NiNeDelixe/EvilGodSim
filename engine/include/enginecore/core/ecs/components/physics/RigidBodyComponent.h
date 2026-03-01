@@ -16,4 +16,4 @@ public:
 };
 
 
-#endif  // PHYSICS_RIGIDBODYCOMPONENT_H_
+#endif // PHYSICS_RIGIDBODYCOMPONENT_H_
