@@ -3,18 +3,30 @@
 std::list<std::filesystem::path> EnginePaths::listDirectory(const std::string_view& folder_name)
 {
     std::list<std::filesystem::path> entries;
-    for (size_t i = d_ptr->roots().size() - 1; i >= 0; i--)
+    const auto& roots = d_ptr->roots();
+
+    for (size_t i = roots.size(); i > 0; --i)
     {
-        auto& root = d_ptr->roots()[i];
+        const auto& root = roots[i - 1];
         std::filesystem::path folder = root.path / folder_name;
-        if (!std::filesystem::is_directory(folder)) 
+        if (!std::filesystem::is_directory(folder))
+        {
             continue;
-        std::filesystem::directory_iterator dir_iter(folder);
+        }
+
+        std::error_code error;
+        std::filesystem::directory_iterator dir_iter(folder, error);
+        if (error)
+        {
+            continue;
+        }
+
         for (const auto& entry : dir_iter)
         {
             entries.push_back(entry);
         }
     }
+
     return entries;
 }
 

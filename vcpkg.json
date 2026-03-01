@@ -15,6 +15,15 @@
       "name": "imgui",
       "features": [
         "docking-experimental",
+        "glfw-binding",
+        "opengl3-binding"
+      ]
+    },
+    {
+      "name": "imgui",
+      "platform": "windows & !uwp",
+      "features": [
+        "docking-experimental",
         "dx11-binding",
         "glfw-binding",
         "opengl3-binding",

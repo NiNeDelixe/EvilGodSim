@@ -8,12 +8,14 @@ file(GLOB_RECURSE HEADERS CONFIGURE_DEPENDS "*.h")
 
 add_executable(${EXECUTABLE_NAME} ${SOURCES} ${HEADERS})
 
+if (WIN32)
 set_target_properties(${EXECUTABLE_NAME}
     PROPERTIES
         WIN32_EXECUTABLE TRUE
         LINK_FLAGS_DEBUG "/SUBSYSTEM:CONSOLE"
         LINK_FLAGS_RELEASE "/SUBSYSTEM:WINDOWS /ENTRY:mainCRTStartup"
 )
+endif()
 
 find_package(imgui CONFIG REQUIRED)
 
