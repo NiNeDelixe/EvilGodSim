@@ -14,8 +14,7 @@ class ISystemFactory
 public:
     ISystemFactory() = default;
     virtual ~ISystemFactory() = default;
-
-    virtual std::shared_ptr<ISystem> createSystem(const SystemCategory& category) = 0;
+    
     virtual SystemsContainer createSystems() = 0;
 };
 

@@ -20,11 +20,10 @@ public:
     ~EngineSystemFactory() = default;
 
 public:
-    virtual std::shared_ptr<ISystem> createSystem(const SystemCategory& category) override;
     virtual SystemsContainer createSystems() override;
 
 private:
     
 };
 
-#endif  // MANAGMENT_ENGINESYSTEMFACTORY_H_
+#endif // MANAGMENT_ENGINESYSTEMFACTORY_H_

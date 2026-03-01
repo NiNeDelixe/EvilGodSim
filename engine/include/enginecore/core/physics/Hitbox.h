@@ -114,4 +114,4 @@ private:
     bool m_crouching = false;
 };
 
-#endif  // PHYSICS_HITBOX_H_
+#endif // PHYSICS_HITBOX_H_
