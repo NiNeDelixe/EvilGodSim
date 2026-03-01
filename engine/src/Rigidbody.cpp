@@ -15,8 +15,8 @@ Rigidbody::Rigidbody(const entt::entity &entity)
         params,
         {},
         {},
-        [](size_t){ LOG(WARNING) << "no enter callback"; },
-        [](size_t){ LOG(WARNING) << "no exit callback"; }
+        [](entityid_t, size_t){ LOG(WARNING) << "no enter callback"; },
+        [](entityid_t, size_t){ LOG(WARNING) << "no exit callback"; }
     });
 
     // m_sensors.resize(def.radialSensors.size() + def.boxSensors.size());
