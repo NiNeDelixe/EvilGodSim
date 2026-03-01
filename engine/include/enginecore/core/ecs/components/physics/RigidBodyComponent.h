@@ -11,7 +11,8 @@
 class RigidBodyComponent : public IComponent
 {
 public:
-    Rigidbody rigidbody;
+    entt::handle self_id;
+    Rigidbody rigidbody = Rigidbody(self_id);
 };
 
 

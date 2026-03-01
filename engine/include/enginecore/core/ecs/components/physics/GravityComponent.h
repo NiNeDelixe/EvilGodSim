@@ -9,7 +9,7 @@
 class GravityComponent : public IComponent
 {
 public:
-    float force;
+    DECLARE_META_FIELD(float, force)
 };
 
 #endif  // PHYSICS_GRAVITYCOMPONENT_H_

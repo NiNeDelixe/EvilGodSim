@@ -61,6 +61,8 @@ constexpr auto ENGINE_LOGS_DIRECTORY = "logs";
 #define GETTER_VAL(type, field, Name) const type& Name() const { return this->field; }  
 #define SH_GETTER_VAL(type, field, Name) type Name() const { return this->field; }  
 
+#define DECLARE_META_FIELD(type, field) type field; public: auto& set_##field(const type& value) { this->field = value; return *this; }
+
 using fixedpoint_t = float;
 
 namespace glm

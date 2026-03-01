@@ -26,7 +26,7 @@ union SensorParams
     constexpr SensorParams() : aabb() {}
 };
 
-using sensor_callback = std::function<void(entityid_t, size_t, entityid_t)>;
+using sensor_callback = std::function<void(entityid_t)>;
 
 struct Sensor 
 {
