@@ -43,6 +43,8 @@
 #include "enginecore/core/ecs/systems/managment/EngineSystemFactory.h"
 #include "enginecore/core/ecs/entities/Camera.h"
 
+#include "enginecore/core/lang/Localization.h"
+
 #include "enginecore/utils/ImguiIncludes.h"
 // #include "enginecore/utils/FPSStats.h"
 

@@ -5,9 +5,13 @@
 #include <map>
 #include <memory>
 #include <queue>
+#include <filesystem>
+#include <fstream>
+#include <array>
 
 #include <glog/logging.h>
 
+#include "enginecore/utils/types/JsonDefines.h"
 #include "enginecore/interfaces/IAssetLoader.h"
 
 /// <summary>
@@ -54,6 +58,7 @@ public:
 	void addResource(const AssetType& tag, const std::string& filename, const std::string& alias,
 		const std::shared_ptr<configs::AssetConfig>& settings);
 	void addResources(const std::list<std::filesystem::path>& resources);
+	void addResourcesFromContent(const std::filesystem::path& resources_root);
 
 	bool hasNext() const { return !m_entries.empty(); }
 	void loadNext();
@@ -65,6 +70,7 @@ public:
 			loadNext();
 		}
 	}
+
 	
 
 protected:

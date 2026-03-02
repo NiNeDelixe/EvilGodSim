@@ -48,8 +48,10 @@ EngineCoreApplication::EngineCoreApplication(int& argc, char** argv)
 
 	this->m_assets_loader = AssetsLoader::instance();
 
+	Localization::init("resources", m_global_settings->ui()->language.toString());
 
-	this->m_assets_loader.lock()->addResources(m_paths->listResources());
+	//this->m_assets_loader.lock()->addResources(m_paths->listResources());
+	this->m_assets_loader.lock()->addResourcesFromContent("resources");
 
 	setScreen(std::make_shared<PlaceHolderScreen>());	
 
