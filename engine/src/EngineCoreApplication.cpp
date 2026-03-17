@@ -81,6 +81,10 @@ EngineCoreApplication::~EngineCoreApplication()
 	ImGui_ImplOpenGL3_Shutdown();
 	ImGui_ImplGlfw_Shutdown();
 	ImGui::DestroyContext(this->m_gui_context);
+
+	m_current_screen.~shared_ptr();
+
+	EngineCoreApplication::m_instance = nullptr;
 }
 
 int EngineCoreApplication::exec() noexcept(false)

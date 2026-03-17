@@ -91,10 +91,11 @@ public:
 	std::weak_ptr<EnginePaths> paths() const { return m_paths; }
 	std::weak_ptr<DrawContext> ctx() const { return m_ctx; }
 	const std::weak_ptr<AssetsLoader>& getAssetsLoader() const { return m_assets_loader; }
+	std::vector<std::shared_ptr<Ui>>& getUis() { return m_uis; }
 	// const std::weak_ptr<FPSCounter>& fpsStats() const { return m_fps_counter; }
 
 public:
-	GETTER(std::vector<std::shared_ptr<Ui>>, m_uis, Uis)
+	//GETTER(std::vector<std::shared_ptr<Ui>>, m_uis, Uis)
 	SETTER(std::vector<std::shared_ptr<Ui>>, m_uis, Uis)
 
 	GETTER(std::shared_ptr<SystemsManager>, m_systems_manager, SystemManager)
