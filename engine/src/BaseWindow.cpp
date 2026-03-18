@@ -58,7 +58,7 @@ BaseWindow::BaseWindow(const std::weak_ptr<DisplaySettings>& settings, const std
     glEnable(GL_DEBUG_OUTPUT);
     glDebugMessageCallback(m_events->glMessageCallback, 0);
 
-    this->m_viewports[0] = std::make_shared<Viewport>(width, height);
+    this->m_viewports[0] = std::make_shared<Viewport>(m_width, m_height);
 
     glClearColor(0.0f, 0.0f, 0.0f, 1);
     glEnable(GL_BLEND);

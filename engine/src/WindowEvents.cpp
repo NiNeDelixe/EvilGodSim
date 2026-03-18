@@ -258,12 +258,12 @@ void BaseWindow::WindowEvents::windowSizeCallback(GLFWwindow* window, int width,
             handler->m_display_settings.lock()->height.set(height);
         }
     }
-    //handler->resetScissor();
+    handler->resetScissor();
 }
 
 void BaseWindow::WindowEvents::glfwErrorCallback(int error_code, const char* error_descrition)
 {
-    LOG(ERROR) << "gl_error: " << error_descrition;
+    LOG(ERROR) << "glfw error:" << error_descrition;
 }
 
 void GLAPIENTRY BaseWindow::WindowEvents::glMessageCallback(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar* message, const void* userParam)

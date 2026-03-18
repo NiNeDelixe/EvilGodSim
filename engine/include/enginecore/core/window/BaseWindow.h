@@ -83,6 +83,8 @@ public:
     GLFWwindow* const getGLFWWindow() const { return this->m_window; }
     etime_t time();
 
+    glm::vec2 size() const { return glm::vec2(m_width, m_height); } 
+
 public:
     const std::shared_ptr<WindowEvents>& events() { return this->m_events; }
 
