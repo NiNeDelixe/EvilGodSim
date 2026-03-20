@@ -245,12 +245,12 @@ void BaseWindow::WindowEvents::windowSizeCallback(GLFWwindow* window, int width,
 
     if (width && height)
     {
-        if (handler->isFocused())
-        {
-            handler->m_viewports[0] = std::make_shared<Viewport>(width, height);
-            handler->m_width = width;
-            handler->m_height = height;
-        }
+        // if (handler->isFocused())
+        // {
+        //     handler->m_viewports[0] = std::make_shared<Viewport>(width, height);
+        //     handler->m_width = width;
+        //     handler->m_height = height;
+        // }
 
         if (!handler->isFullscreen() && !handler->isMaximized())
         {
@@ -295,4 +295,19 @@ void BaseWindow::WindowEvents::scrollCallback(GLFWwindow* window, double xoffset
     std::shared_ptr<BaseWindow::WindowEvents> events = handler->events();
 
     events->m_scroll += yoffset;
+}
+
+void BaseWindow::WindowEvents::framebufferSizeCallback(GLFWwindow* window, int width, int height)
+{
+    BaseWindow* handler = static_cast<BaseWindow*>(glfwGetWindowUserPointer(window));
+
+    if (!width || !height)
+    {
+        return;
+    }
+
+    handler->m_viewports[0] = std::make_shared<Viewport>(width, height);
+    handler->m_width = width;
+    handler->m_height = height;
+    handler->resetScissor();
 }

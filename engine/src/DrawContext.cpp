@@ -65,6 +65,13 @@ DrawContext::~DrawContext()
 
 DrawContext DrawContext::sub(std::shared_ptr<IFlushable> flushable) const
 {
+    if (m_parent == nullptr)
+    {
+        if (auto window = m_window.lock())
+        {
+            const_cast<DrawContext*>(this)->m_current_viewport = window->viewports()[0]->getSize();
+        }
+    }
     auto ctx = DrawContext(*this);
     ctx.m_parent = this;
     ctx.m_flushable = flushable;

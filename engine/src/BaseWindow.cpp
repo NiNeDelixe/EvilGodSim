@@ -30,7 +30,7 @@ BaseWindow::BaseWindow(const std::weak_ptr<DisplaySettings>& settings, const std
     glfwWindowHint(GLFW_RESIZABLE, GL_TRUE);
     glfwWindowHint(GLFW_SAMPLES, static_cast<int>(display_settings->samples.get()));
 
-    GLFWwindow* window = glfwCreateWindow(width, height, m_title.c_str(), nullptr, nullptr);
+    GLFWwindow* window = glfwCreateWindow(m_width, m_height, m_title.c_str(), nullptr, nullptr);
 
     if (window == nullptr)
     {
@@ -39,7 +39,7 @@ BaseWindow::BaseWindow(const std::weak_ptr<DisplaySettings>& settings, const std
     }
 
     m_window = window;
-    glfwMakeContextCurrent(window);
+    glfwMakeContextCurrent(m_window);
 
     glewExperimental = GL_TRUE;
     GLenum glewErr = glewInit();
@@ -52,12 +52,22 @@ BaseWindow::BaseWindow(const std::weak_ptr<DisplaySettings>& settings, const std
         else
         {
             LOG(ERROR) << "failed to initialize GLEW:\n" << glewGetErrorString(glewErr);
+            throw std::runtime_error("Failed to initialize GLEW");
         }
     }
 
     glEnable(GL_DEBUG_OUTPUT);
     glDebugMessageCallback(m_events->glMessageCallback, 0);
 
+    // int* t_width = new int(), *t_height = new int();
+    // glfwGetFramebufferSize(window, t_width, t_height);
+    // if (t_height && t_width)
+    // {
+    //     m_width = *t_width;
+    //     m_height = *t_height;
+    // }
+    // delete t_width;
+    // delete t_height;
     this->m_viewports[0] = std::make_shared<Viewport>(m_width, m_height);
 
     glClearColor(0.0f, 0.0f, 0.0f, 1);
@@ -72,12 +82,13 @@ BaseWindow::BaseWindow(const std::weak_ptr<DisplaySettings>& settings, const std
         LOG(INFO) << "Max texture size is " << Texture::MAX_RESOLUTION;
     }
 
-    glfwSetKeyCallback(window, WindowEvents::keyCallback);
-    glfwSetMouseButtonCallback(window, WindowEvents::mouseButtonCallback);
-    glfwSetCursorPosCallback(window, WindowEvents::cursorPositionCallback);
-    glfwSetWindowSizeCallback(window, WindowEvents::windowSizeCallback);
-    glfwSetCharCallback(window, WindowEvents::characterCallback);
-    glfwSetScrollCallback(window, WindowEvents::scrollCallback);
+    glfwSetKeyCallback(m_window, WindowEvents::keyCallback);
+    glfwSetMouseButtonCallback(m_window, WindowEvents::mouseButtonCallback);
+    glfwSetCursorPosCallback(m_window, WindowEvents::cursorPositionCallback);
+    glfwSetWindowSizeCallback(m_window, WindowEvents::windowSizeCallback);
+    glfwSetCharCallback(m_window, WindowEvents::characterCallback);
+    glfwSetScrollCallback(m_window, WindowEvents::scrollCallback);
+    glfwSetFramebufferSizeCallback(m_window, WindowEvents::framebufferSizeCallback);
 
     /*observers_keeper = util::ObjectsKeeper();
     observers_keeper.keepAlive(display_settings->fullscreen.observe(
@@ -112,9 +123,9 @@ BaseWindow::BaseWindow(const std::weak_ptr<DisplaySettings>& settings, const std
     //    standard_cursors[i] = glfwCreateStandardCursor(cursor);
     //}
 
-    glfwSetWindowUserPointer(window, this);
+    glfwSetWindowUserPointer(m_window, this);
 
-    m_window = window;
+    //m_window = window;
 }
 
 BaseWindow::~BaseWindow()

@@ -71,6 +71,7 @@ public:
 	static void glfwErrorCallback(int error_code, const char* error_descrition);
 	static void GLAPIENTRY glMessageCallback(GLenum source, GLenum type, GLuint id,
 		GLenum severity, GLsizei length, const GLchar* message, const void* userParam);
+	static void framebufferSizeCallback(GLFWwindow* window, int width, int height);
 
 protected:
 	BaseWindow& m_base_window;
