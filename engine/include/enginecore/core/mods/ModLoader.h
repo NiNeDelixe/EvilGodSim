@@ -7,7 +7,7 @@
 #include <unordered_map>
 #include <filesystem>
 
-#include <glog/logging.h>
+#include <ng-log/logging.h>
 
 #include "enginecore/utils/platform/SystemDetection.h"
 

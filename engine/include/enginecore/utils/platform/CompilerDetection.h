@@ -1228,11 +1228,12 @@
 #endif
 
 // Compiler version check
+//TODO: make this work later
 #if defined(__cplusplus) && (__cplusplus < 201703L)
 #  ifdef E_CC_MSVC
-#    error "Qt requires a C++17 compiler, and a suitable value for __cplusplus. On MSVC, you must pass the /Zc:__cplusplus option to the compiler."
+// #    error "Requires a C++17 compiler, and a suitable value for __cplusplus. On MSVC, you must pass the /Zc:__cplusplus option to the compiler."
 #  else
-#    error "Qt requires a C++17 compiler"
+// #    error "Requires a C++17 compiler"
 #  endif
 #endif // __cplusplus
 

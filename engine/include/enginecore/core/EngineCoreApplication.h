@@ -7,7 +7,7 @@
 #include <list>
 #include <deque>
 
-#include <glog/logging.h>
+#include <ng-log/logging.h>
 #include <glm/ext.hpp>
 #include <cpptrace/from_current.hpp>
 

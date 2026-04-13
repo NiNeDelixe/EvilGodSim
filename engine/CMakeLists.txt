@@ -51,7 +51,7 @@ find_package(glfw3 REQUIRED)
 find_package(glew REQUIRED)
 find_package(toml11 REQUIRED)
 find_package(OpenCV REQUIRED)
-find_package(glog REQUIRED)
+find_package(ng-log REQUIRED)
 find_package(imgui CONFIG REQUIRED)
 find_package(EnTT CONFIG REQUIRED)
 find_package(Stb REQUIRED)
@@ -80,7 +80,7 @@ target_link_libraries(${PROJECT_NAME}
 		GLEW::glew
 		toml11::toml11
 		opencv_core opencv_imgproc opencv_imgcodecs opencv_highgui
-		glog::glog
+		ng-log::ng-log
 		glsl::compiler
 		EmbeddedResourcesEngine
 		imgui::imgui

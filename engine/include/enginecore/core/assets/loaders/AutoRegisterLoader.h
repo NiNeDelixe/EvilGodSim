@@ -4,7 +4,7 @@
 
 #include <memory>
 
-#include <glog/logging.h>
+#include <ng-log/logging.h>
 
 #include "enginecore/core/assets/AssetsLoader.h"
 

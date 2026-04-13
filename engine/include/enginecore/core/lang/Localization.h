@@ -9,7 +9,7 @@
 #include <unordered_map>
 #include <fstream>
 
-#include <glog/logging.h>
+#include <ng-log/logging.h>
 
 #include "enginecore/utils/types/JsonDefines.h"
 

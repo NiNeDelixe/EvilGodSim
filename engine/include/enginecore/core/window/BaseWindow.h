@@ -13,7 +13,7 @@
 #include "enginecore/utils/TimeUtils.h" // windows goes brrr
 #include <GLFW/glfw3.h>
 
-#include <glog/logging.h>
+#include <ng-log/logging.h>
 
 #include "enginecore/core/CoreDefines.h"
 

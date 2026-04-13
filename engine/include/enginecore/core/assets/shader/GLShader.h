@@ -13,7 +13,7 @@
 #include <sstream>
 #include <stdarg.h>
 
-#include <glog/logging.h>
+#include <ng-log/logging.h>
 
 #include <glm/gtc/type_ptr.hpp>
 

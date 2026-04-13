@@ -2,7 +2,7 @@
 #ifndef CORE_LIBRARIESDEFINES_H_
 #define CORE_LIBRARIESDEFINES_H_
 
-#include <glog/logging.h>
+#include <ng-log/logging.h>
 #include <magic_enum/magic_enum_all.hpp>
 
 #include "enginecore/utils/types/JsonDefines.h"

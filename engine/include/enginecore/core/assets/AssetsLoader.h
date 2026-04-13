@@ -9,7 +9,7 @@
 #include <fstream>
 #include <array>
 
-#include <glog/logging.h>
+#include <ng-log/logging.h>
 
 #include "enginecore/utils/types/JsonDefines.h"
 #include "enginecore/interfaces/IAssetLoader.h"

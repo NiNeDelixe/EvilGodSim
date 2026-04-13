@@ -10,7 +10,7 @@
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
 
-#include <glog/logging.h>
+#include <ng-log/logging.h>
 
 #include "enginecore/interfaces/IAssetLoader.h"
 

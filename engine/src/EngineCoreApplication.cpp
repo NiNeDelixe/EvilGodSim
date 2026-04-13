@@ -10,10 +10,10 @@ EngineCoreApplication::EngineCoreApplication(int& argc, char** argv)
 		std::filesystem::create_directory(ENGINE_LOGS_DIRECTORY);
 	}
 
-	google::SetLogDestination(google::GLOG_INFO, (std::string(ENGINE_LOGS_DIRECTORY) + "/info_").c_str());
-	google::SetLogDestination(google::GLOG_WARNING, (std::string(ENGINE_LOGS_DIRECTORY) + "/warning_").c_str());
-	google::SetLogDestination(google::GLOG_ERROR, (std::string(ENGINE_LOGS_DIRECTORY) + "/error_").c_str());
-	google::SetLogDestination(google::GLOG_FATAL, (std::string(ENGINE_LOGS_DIRECTORY) + "/fatal_").c_str());
+	nglog::SetLogDestination(nglog::NGLOG_INFO, (std::string(ENGINE_LOGS_DIRECTORY) + "/info_").c_str());
+	nglog::SetLogDestination(nglog::NGLOG_WARNING, (std::string(ENGINE_LOGS_DIRECTORY) + "/warning_").c_str());
+	nglog::SetLogDestination(nglog::NGLOG_ERROR, (std::string(ENGINE_LOGS_DIRECTORY) + "/error_").c_str());
+	nglog::SetLogDestination(nglog::NGLOG_FATAL, (std::string(ENGINE_LOGS_DIRECTORY) + "/fatal_").c_str());
 
 	FLAGS_alsologtostderr = true;
 	FLAGS_minloglevel = 0;
@@ -21,7 +21,7 @@ EngineCoreApplication::EngineCoreApplication(int& argc, char** argv)
 	FLAGS_log_dir = ENGINE_LOGS_DIRECTORY;
 	FLAGS_logfile_mode = 0600;
 
-	google::InitGoogleLogging(argv[0]);
+	nglog::InitializeLogging(argv[0]);
 
 	auto a = std::make_shared<DisplaySettings>(); //TODO: in future its moved to global options and weak_ptr in BaseWindow doesnt expired
 	this->m_window = std::make_shared<BaseWindow>(m_global_settings->display(), argv[0]);
