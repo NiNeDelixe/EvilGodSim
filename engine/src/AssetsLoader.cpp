@@ -56,10 +56,6 @@ void AssetsLoader::addResources(const std::list<std::filesystem::path>& resource
 void AssetsLoader::addResourcesFromContent(const std::filesystem::path &resources_root)
 {
 	std::filesystem::path content_path = resources_root / "content.json";
-	if (!std::filesystem::exists(content_path))
-	{
-		content_path = resources_root / "conent.json";
-	}
 
 	if (!std::filesystem::exists(content_path))
 	{

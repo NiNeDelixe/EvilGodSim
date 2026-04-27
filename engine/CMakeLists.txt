@@ -44,6 +44,7 @@ add_library (Engine::Core ALIAS ${PROJECT_NAME})
 include_directories(
 	"${PROJECT_SOURCE_DIR}/libraries/rectpack2D/src"
 	"${PROJECT_SOURCE_DIR}/libraries/fpm/include"
+	"${PROJECT_SOURCE_DIR}/include"
 )
 
 find_package(OpenGL REQUIRED)
